@@ -1,0 +1,27 @@
+d1,VarId,FLOAT,,
+contador,VarId,INT,,
+suma,VarId,FLOAT,,
+palabra,VarId,STRING,,
+contar,VarId,FLOAT,,
+actual,VarId,FLOAT,,
+var,VarId,INT,,
+_"Prueba.txt AnalizadorLexico",Const_String,,"Prueba.txt AnalizadorLexico",29
+_0,Numero,,0,
+_76.5,Real,,76.5,
+_18.22,Real,,18.22,
+_9,Numero,,9,
+_1,Numero,,1,
+_0.342,Real,,0.342,
+_4.67,Real,,4.67,
+_"La variable suma",Const_String,,"La variable suma",18
+_2,Numero,,2,
+_0,Numero,,0,
+_"actualesmayorque2ydistintode",Const_String,,"actualesmayorque2ydistintode",30
+_"es mayor",Const_String,,"es mayor",10
+_"no es mayor que 2",Const_String,,"no es mayor que 2",19
+_"es mayor",Const_String,,"es mayor",10
+_2,Numero,,2,
+_12,Numero,,12,
+_24,Numero,,24,
+_48,Numero,,48,
+_3.14,Real,,3.14,
