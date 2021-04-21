@@ -7,7 +7,7 @@
 - Morello Delfina
 
 
-## Ubicación de los archivos que se pidieron
+## Ubicación de los archivos que se pidieron para la entrega 1 (Compiladores)
 
 * Lexico.flex: ./SegundaEntrega/Lexico.flex
 * Sintactico.cup: ./SegundaEntrega/Sintactico.cup
