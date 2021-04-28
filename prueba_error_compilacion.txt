@@ -1,0 +1,31 @@
+</ prueba_error_compilacion.txt/>
+
+
+DECLARE
+[suma, contador, d1] := [FLOAT, INT, FLOAT]
+[actual, contar, palabra] := [FLOAT, FLOAT, STRING]
+[var] := [INT]
+ENDDECLARE
+
+BEGIN.PROGRAM
+
+If ((actual > 2) and (actual <> 0)){
+	PRINT  "actualesmayorque2ydistintode"
+	palabra := "es mayor"
+}
+Else{
+	PRINT "no es mayor que 2"
+	palabra := "es mayor"
+}
+
+If (INLIST(contador, [2 ; 12 ; 24 ; 48])){
+	d1 := 3.14
+}
+
+</ Se agrega un error de compilación a continuación />
+
+If (true) {
+    PRINT "true, valor no válido en este lenguaje"
+}
+
+END.PROGRAM

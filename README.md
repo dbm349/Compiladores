@@ -24,4 +24,11 @@ También en Windows usar el comando
 4. Con la opción "Análisis Sintáctico" se puede realizar el análisis sintáctico el cual también debe ser correcto.
 
 
+## Prueba en archivo con errores de compilación:
+
+1. Seleccionar archivo ```prueba_error_compilacion.txt```
+
+2. Con la opción "Análisis Lexicográfico" se puede realizar un análisis léxico del código en el archivo. Se debería notificar de un error léxico.
+
+3. Con la opción "Análisis Sintáctico" se puede realizar el análisis sintáctico el cual también debería contener un error.
 
