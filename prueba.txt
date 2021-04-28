@@ -35,8 +35,6 @@ Else{
 	palabra := "es mayor"
 }
 
-</ INLIST Grupo 1, eliminar si no es tu tema especial />
-
 If (INLIST(contador, [2 ; 12 ; 24 ; 48])){
 	d1 := 3.14
 }
