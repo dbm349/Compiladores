@@ -17,7 +17,7 @@ PRINT  "Prueba.txt AnalizadorLexico"
 contador := 0
 suma := 76.5
 contar := 18.22
-</ prueba.txt/>
+
 while (contador <= 9) {
 	contador := contador + 1
 	actual := (contador / 0.342) + (contador * (contar + 4.67))
