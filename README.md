@@ -36,3 +36,14 @@ Luego de ejecutar el análisis en el archivo ts.txt se debe hallar la tabla de s
 
 3. Con la opción "Análisis Sintáctico" se puede realizar el análisis sintáctico el cual también debería contener un error.
 
+## Prueba con archivo alternativo
+
+1. Para correr el programa usar el comando
+
+        java -jar Analizador.jar
+
+También en Windows usar el comando
+
+      .\Run.cmd
+
+2. Luego desde la opción "Abrir archivo", seleccionar el archivo ```prueba`_b.txt```.
