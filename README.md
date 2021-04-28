@@ -23,6 +23,10 @@ También en Windows usar el comando
 
 4. Con la opción "Análisis Sintáctico" se puede realizar el análisis sintáctico el cual también debe ser correcto.
 
+### Resultados
+
+Luego de ejecutar el análisis en el archivo ts.txt se debe hallar la tabla de símbolos. 
+
 
 ## Prueba en archivo con errores de compilación:
 
