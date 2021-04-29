@@ -116,9 +116,7 @@ terminal String VarId, Const_String, Numero, Real;
 
 non terminal
 
-tipo, cond, while, if,
-condicionlogica, condicion, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion,
-inlist, listadecte, listareal, listanumero;
+tipo, if, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion, listadecte, listareal, listanumero;
 
 non terminal NodoPrograma pgm;
 non terminal List<NodoSentencia> programa, listadesentencias;
@@ -126,6 +124,8 @@ non terminal NodoSentencia lineadesentencia;
 non terminal NodoExpresion expresion, termino, factor;
 non terminal NodoAsignacion asignacion;
 non terminal NodoSalida salida;
+non terminal NodoWhile while;
+non terminal NodoCondicion cond, condicionlogica, condicion, inlist;
 
 start with pgm;
 
@@ -169,7 +169,7 @@ lineadesentencia ::=        asignacion:asignacion
                                                                         {://System.out.println("[Regla 5] Linea de sentencia - While");
 							                                                s = s + "[Regla 5] Linea de sentencia - While\n";
 							                                                mensaje += "Reducido: <while> -> <lineadesentencia>\n";
-							                                                RESULT = new NodoSentencia("");
+							                                                RESULT = nodo_while;
 							                                                :}
 			                | if                                        {:System.out.println("[Regla 6] Linea de sentencia - If");
 							                                                s = s + "[Regla 6] Linea de sentencia - If\n";
@@ -186,16 +186,32 @@ tipo ::=                    PInt:in                                     {:System
                                                                             s = s + "[Regla 9] Tipo - STRING\n";
                                                                             listaTipos.add(st.toString());:};
 
-cond ::=                    condicion                                   {:System.out.println("[Regla 10] Cond - Condición");
-                                                                            s = s + "[Regla 10] Cond - Condición\n";:}
-                            | condicionlogica                           {:System.out.println("[Regla 11] Cond - Condicion Lógica");
-                                                                            s = s + "[Regla 11] Cond - Condicion Lógica\n";:}
-                            | inlist                                    {:System.out.println("[Regla 12] Cond - InList");
-                                                                            s = s + "[Regla 12] Cond - InList\n";:};
+cond ::=                    condicion:condicion
+                                                                        {://System.out.println("[Regla 10] Cond - Condición");
+                                                                            s = s + "[Regla 10] Cond - Condición\n";
+							                                                mensaje += "Reducido: <condicion> -> <cond>\n";
+							                                                RESULT = condicion;
+                                                                            :}
+                            | condicionlogica:condicion
+                                                                        {://System.out.println("[Regla 11] Cond - Condicion Lógica");
+                                                                            s = s + "[Regla 11] Cond - Condicion Lógica\n";
+							                                                mensaje += "Reducido: <condicion> -> <cond>\n";
+							                                                RESULT = condicion;
+                                                                            :}
+                            | inlist:condicion
+                                                                        {://System.out.println("[Regla 12] Cond - InList");
+                                                                            s = s + "[Regla 12] Cond - InList\n";
+							                                                mensaje += "Reducido: <condicion> -> <cond>\n";
+							                                                RESULT = condicion;
+                                                                            :};
 
-while ::=                   While ParA cond ParC LlaveA
-                            listadesentencias LlaveC                    {:System.out.println("[Regla 13] While");
-							                                                s = s + "[Regla 13] While\n";:};
+while ::=                   While ParA cond:condicion ParC LlaveA
+                            listadesentencias:bloque LlaveC
+                                                                        {://System.out.println("[Regla 13] While");
+							                                                s = s + "[Regla 13] While\n";
+							                                                mensaje += "Reducido: while ( <cond> ) { <listadesentencias> } -> <while>\n";
+							                                                RESULT = new NodoWhile(condicion, bloque);
+							                                                :};
 
 if ::=                      If ParA cond ParC LlaveA
                             listadesentencias LlaveC                    {:System.out.println("[Regla 14] If");
@@ -287,7 +303,7 @@ factor ::=                  VarId:identificador
                                                                              :};
 
 salida ::=                  Print Const_String:constante_string
-                                                                        {:System.out.println("[Regla 28] Factor Expresion");
+                                                                        {://System.out.println("[Regla 28] Factor Expresion");
                                                                             s = s + "[Regla 28] Factor Expresion\n";
                                                                             listaSimbolos.add(constante_string.toString());
                                                                             listaSimbolosNombre.add("Const_String");
@@ -295,37 +311,81 @@ salida ::=                  Print Const_String:constante_string
                                                                             RESULT = new NodoSalida(new NodoConstanteString(constante_string));
                                                                             :};
 
-condicionlogica ::=         ParA condicion ParC                         {:System.out.println("[Regla 29] (Condicion)");
-                                                                            s = s + "[Regla 29] Condicion\n";:}
-                            | condicion And condicion                   {:System.out.println("[Regla 30] Condicion And Condicion");
-                                                                            s = s + "[Regla 30] Condicion And Condicion\n";:}
-                            | condicion Or condicion                    {:System.out.println("[Regla 31] Condicion Or Condicion");
-                                                                            s = s + "[Regla 31] Condicion Or Condicion\n";:}
-                            | ParA condicion ParC And ParA
-                            condicion ParC                              {:System.out.println("[Regla 32] (Condicion) And (Condicion)");
-                                                                            s = s + "[Regla 32] (Condicion) And (Condicion)\n";:}
-                            | ParA condicion ParC  Or ParA
-                            condicion ParC                              {:System.out.println("[Regla 33] (Condicion) Or (Condicion)");
-                                                                            s = s + "[Regla 33] (Condicion) Or (Condicion)\n";:};
+condicionlogica ::=         ParA condicion:condicion ParC
+                                                                        {://System.out.println("[Regla 29] (Condicion)");
+                                                                            s = s + "[Regla 29] Condicion\n";
+							                                                mensaje += "Reducido: ( <condicion> ) -> <condicionlogica>\n";
+							                                                RESULT = condicion;
+                                                                            :}
+                            | condicion:condicion_izquierda And condicion:condicion_derecha
+                                                                        {:System.out.println("[Regla 30] Condicion And Condicion");
+                                                                            s = s + "[Regla 30] Condicion And Condicion\n";
+							                                                mensaje += "Reducido: <condicion> AND <condicion> -> <condicionlogica>\n";
+							                                                RESULT = new NodoAnd(condicion_izquierda, condicion_derecha);
 
-condicion ::=               expresion op_comp expresion                 {:System.out.println("[Regla 34] Expresion Operacion Logica Expresion");
-							                                                s = s + "[Regla 34] Expresion Operacion Logica Expresion\n";:};
+                                                                            :}
+                            | condicion:condicion_izquierda  Or condicion:condicion_derecha
+                                                                        {:System.out.println("[Regla 31] Condicion Or Condicion");
+                                                                            s = s + "[Regla 31] Condicion Or Condicion\n";
+							                                                mensaje += "Reducido: <condicion> OR <condicion> -> <condicionlogica>\n";
+							                                                RESULT = new NodoOr(condicion_izquierda, condicion_derecha);
+                                                                            :}
+                            | ParA condicion:condicion_izquierda ParC And ParA
+                            condicion:condicion_derecha ParC
+                                                                        {:System.out.println("[Regla 32] (Condicion) And (Condicion)");
+                                                                            s = s + "[Regla 32] (Condicion) And (Condicion)\n";
+							                                                mensaje += "Reducido: ( <condicion> ) AND ( <condicion> ) -> <condicionlogica>\n";
+							                                                RESULT = new NodoOr(condicion_izquierda, condicion_derecha);
+                                                                            :}
+                            | ParA condicion:condicion_izquierda ParC  Or ParA
+                            condicion:condicion_derecha ParC
+                                                                        {:System.out.println("[Regla 33] (Condicion) Or (Condicion)");
+                                                                            s = s + "[Regla 33] (Condicion) Or (Condicion)\n";
+							                                                mensaje += "Reducido: ( <condicion> ) OR ( <condicion> ) -> <condicionlogica>\n";
+							                                                RESULT = new NodoOr(condicion_izquierda, condicion_derecha);
+                                                                            :};
 
-op_comp ::=                 Mayor                                       {:System.out.println("[Regla 35] Operacion Mayor");
-			                				                                s = s + "[Regla 35] Operacion Mayor\n";:}
-			                | MayorI                                    {:System.out.println("[Regla 36] Operacion MayorI");
-			                				                                s = s + "[Regla 36] Operacion MayorI\n";:}
-			                | Menor                                     {:System.out.println("[Regla 37] Operacion Menor");
-			                				                                s = s + "[Regla 37] Operacion Menor\n";:}
-			                | MenorI                                    {:System.out.println("[Regla 38] Operacion MenorI");
-			                				                                s = s + "[Regla 38] Operacion MenorI\n";:}
-			                | Distinto                                  {:System.out.println("[Regla 39] Operacion Distinto");
-			                				                                s = s + "[Regla 39] Operacion Distinto\n";:}
-			                | Igual                                     {:System.out.println("[Regla 40] Operacion Igual");
-							                                                s = s + "[Regla 40] Operacion Igual\n";:};
+condicion ::=               expresion:expresion_izquierda Mayor expresion:expresion_derecha
+                                                                        {://System.out.println("[Regla 35] Operacion Mayor");
+			                				                                s = s + "[Regla 35] Operacion Mayor\n";
+							                                                mensaje += "Reducido: <expresion> > <expresion> -> <condicion>\n";
+							                                                RESULT = new NodoMayor(expresion_izquierda, expresion_derecha);
+			                				                                :}
+			                | expresion:expresion_izquierda MayorI expresion:expresion_derecha
+                                                                        {://System.out.println("[Regla 36] Operacion MayorI");
+			                				                                s = s + "[Regla 36] Operacion MayorI\n";
+							                                                mensaje += "Reducido: <expresion> >= <expresion> -> <condicion>\n";
+							                                                RESULT = new NodoMayorIgual(expresion_izquierda, expresion_derecha);
+			                				                                :}
+			                | expresion:expresion_izquierda Menor expresion:expresion_derecha
+                                                                        {://System.out.println("[Regla 37] Operacion Menor");
+			                				                                s = s + "[Regla 37] Operacion Menor\n";
+							                                                mensaje += "Reducido: <expresion> < <expresion> -> <condicion>\n";
+							                                                RESULT = new NodoMenor(expresion_izquierda, expresion_derecha);
+			                				                                :}
+			                | expresion:expresion_izquierda MenorI expresion:expresion_derecha
+                                                                        {://System.out.println("[Regla 38] Operacion MenorI");
+			                				                                s = s + "[Regla 38] Operacion MenorI\n";
+							                                                mensaje += "Reducido: <expresion> <= <expresion> -> <condicion>\n";
+							                                                RESULT = new NodoMenorIgual(expresion_izquierda, expresion_derecha);
+			                				                                :}
+			                | expresion:expresion_izquierda Distinto expresion:expresion_derecha
+                                                                        {://System.out.println("[Regla 39] Operacion Distinto");
+			                				                                s = s + "[Regla 39] Operacion Distinto\n";
+							                                                mensaje += "Reducido: <expresion> <> <expresion> -> <condicion>\n";
+							                                                RESULT = new NodoDistinto(expresion_izquierda, expresion_derecha);
+			                				                                :}
+			                | expresion:expresion_izquierda Igual expresion:expresion_derecha
+                                                                        {://System.out.println("[Regla 40] Operacion Igual");
+							                                                s = s + "[Regla 40] Operacion Igual\n";
+							                                                mensaje += "Reducido: <expresion> = <expresion> -> <condicion>\n";
+							                                                RESULT = new NodoIgual(expresion_izquierda, expresion_derecha);
+							                                                :};
 
 declaracion ::=             DeclareB listadedeclaraciones DeclareE      {:System.out.println("[Regla 41] Declaracion");
-							                                                s = s + "[Regla 41] Declaracion\n";:};
+							                                                s = s + "[Regla 41] Declaracion\n";
+
+							                                                :};
 
 
 listadedeclaraciones ::=    CorcheteA lineadedeclaracion CorcheteC      {:System.out.println("[Regla 42] Lista de Declaraciones");
@@ -352,7 +412,9 @@ programa ::=                ProgramB listadesentencias:bloque ProgramE         {
 
 inlist ::=                  InList ParA VarId Coma CorcheteA
                             listadecte CorcheteC ParC                   {:System.out.println("[Regla 47] InList");
-							                                                s = s + "[Regla 47] InList\n";:};
+							                                                s = s + "[Regla 47] InList\n";
+							                                                RESULT = new NodoCondicion("");
+							                                                :};
 
 listadecte ::=              listareal                                   {:System.out.println("[Regla 48] Lista de Cte - Real");
                                                                             s = s + "[Regla 48] Lista de Cte - Real\n";:}
