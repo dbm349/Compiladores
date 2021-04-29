@@ -116,7 +116,7 @@ terminal String VarId, Const_String, Numero, Real;
 
 non terminal
 
-tipo, if, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion, listadecte, listareal, listanumero;
+tipo, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion, listadecte, listareal, listanumero;
 
 non terminal NodoPrograma pgm;
 non terminal List<NodoSentencia> programa, listadesentencias;
@@ -126,6 +126,7 @@ non terminal NodoAsignacion asignacion;
 non terminal NodoSalida salida;
 non terminal NodoWhile while;
 non terminal NodoCondicion cond, condicionlogica, condicion, inlist;
+non terminal NodoIfAbstracto if;
 
 start with pgm;
 
@@ -171,9 +172,11 @@ lineadesentencia ::=        asignacion:asignacion
 							                                                mensaje += "Reducido: <while> -> <lineadesentencia>\n";
 							                                                RESULT = nodo_while;
 							                                                :}
-			                | if                                        {:System.out.println("[Regla 6] Linea de sentencia - If");
+			                | if:nodo_if
+                                                                        {://System.out.println("[Regla 6] Linea de sentencia - If");
 							                                                s = s + "[Regla 6] Linea de sentencia - If\n";
-							                                                RESULT = new NodoSentencia("");
+							                                                mensaje += "Reducido: <if> -> <lineadesentencia>\n";
+							                                                RESULT = nodo_if;
 							                                                :};
 
 tipo ::=                    PInt:in                                     {:System.out.println("[Regla 7] Tipo - INT");
@@ -213,13 +216,21 @@ while ::=                   While ParA cond:condicion ParC LlaveA
 							                                                RESULT = new NodoWhile(condicion, bloque);
 							                                                :};
 
-if ::=                      If ParA cond ParC LlaveA
-                            listadesentencias LlaveC                    {:System.out.println("[Regla 14] If");
-							                                                s = s + "[Regla 14] If\n";:}
-			                | If ParA cond ParC LlaveA
-			                listadesentencias LlaveC Else LlaveA
-			                listadesentencias LlaveC                    {:System.out.println("[Regla 15] If Else");
-							                                                s = s + "[Regla 15] If Else\n";:};
+if ::=                      If ParA cond:condicion ParC LlaveA
+                            listadesentencias:bloque LlaveC
+                                                                        {:System.out.println("[Regla 14] If");
+							                                                s = s + "[Regla 14] If\n";
+							                                                mensaje += "Reducido: if ( <cond> ) { <listadesentencias> } -> <if>\n";
+							                                                RESULT = new NodoIf(condicion, bloque);
+							                                                :}
+			                | If ParA cond:condicion ParC LlaveA
+			                listadesentencias:bloque LlaveC Else LlaveA
+			                listadesentencias:bloque_else LlaveC
+                                                                        {:System.out.println("[Regla 15] If Else");
+							                                                s = s + "[Regla 15] If Else\n";
+							                                                mensaje += "Reducido: if ( <cond> ) { <listadesentencias> } else { <listadesentencias> } -> <if>\n";
+							                                                RESULT = new NodoIfElse(condicion, bloque, bloque_else);
+							                                                :};
 
 asignacion ::=              VarId:identificador Asignacion expresion:expresion
                                                                         {://System.out.println("[Regla 16] Asignacion Expresion");
