@@ -117,7 +117,7 @@ terminal String VarId, Const_String, Numero, Real;
 non terminal
 
 tipo, cond, while, if,
-salida, condicionlogica, condicion, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion,
+condicionlogica, condicion, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion,
 inlist, listadecte, listareal, listanumero;
 
 non terminal NodoPrograma pgm;
@@ -125,6 +125,7 @@ non terminal List<NodoSentencia> programa, listadesentencias;
 non terminal NodoSentencia lineadesentencia;
 non terminal NodoExpresion expresion, termino, factor;
 non terminal NodoAsignacion asignacion;
+non terminal NodoSalida salida;
 
 start with pgm;
 
@@ -158,12 +159,16 @@ lineadesentencia ::=        asignacion:asignacion
 							                                                mensaje += "Reducido: <asignacion> -> <lineadesentencia>\n";
 							                                                RESULT = asignacion;
 							                                                :}
-			                | salida                                    {:System.out.println("[Regla 4] Linea de sentencia - Salida");
+			                | salida:display
+                                                                        {://System.out.println("[Regla 4] Linea de sentencia - Salida");
 							                                                s = s + "[Regla 4] Linea de sentencia - Salida\n";
-							                                                RESULT = new NodoSentencia("");
+							                                                mensaje += "Reducido: <salida> -> <lineadesentencia>\n";
+							                                                RESULT = display;
 							                                                :}
-			                | while                                     {:System.out.println("[Regla 5] Linea de sentencia - While");
+			                | while:nodo_while
+                                                                        {://System.out.println("[Regla 5] Linea de sentencia - While");
 							                                                s = s + "[Regla 5] Linea de sentencia - While\n";
+							                                                mensaje += "Reducido: <while> -> <lineadesentencia>\n";
 							                                                RESULT = new NodoSentencia("");
 							                                                :}
 			                | if                                        {:System.out.println("[Regla 6] Linea de sentencia - If");
@@ -281,10 +286,14 @@ factor ::=                  VarId:identificador
                                                                             RESULT = expresion;
                                                                              :};
 
-salida ::=                  Print Const_String:cs                       {:System.out.println("[Regla 28] Factor Expresion");
+salida ::=                  Print Const_String:constante_string
+                                                                        {:System.out.println("[Regla 28] Factor Expresion");
                                                                             s = s + "[Regla 28] Factor Expresion\n";
-                                                                            listaSimbolos.add(cs.toString());
-                                                                            listaSimbolosNombre.add("Const_String");:};
+                                                                            listaSimbolos.add(constante_string.toString());
+                                                                            listaSimbolosNombre.add("Const_String");
+							                                                mensaje += "Reducido: <Const_String> -> <salida>\n";
+                                                                            RESULT = new NodoSalida(new NodoConstanteString(constante_string));
+                                                                            :};
 
 condicionlogica ::=         ParA condicion ParC                         {:System.out.println("[Regla 29] (Condicion)");
                                                                             s = s + "[Regla 29] Condicion\n";:}
