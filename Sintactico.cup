@@ -116,7 +116,7 @@ terminal String VarId, Const_String, Numero, Real;
 
 non terminal
 
-tipo, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion, listadecte, listareal, listanumero;
+tipo, op_comp, declaracion, listadedeclaraciones, lineadedeclaracion;
 
 non terminal NodoPrograma pgm;
 non terminal List<NodoSentencia> programa, listadesentencias;
@@ -127,6 +127,9 @@ non terminal NodoSalida salida;
 non terminal NodoWhile while;
 non terminal NodoCondicion cond, condicionlogica, condicion, inlist;
 non terminal NodoIfAbstracto if;
+non terminal List<NodoExpresion> listareal;
+non terminal List<NodoExpresion> listanumero;
+non terminal List<NodoExpresion> listadecte;
 
 start with pgm;
 
@@ -421,31 +424,63 @@ programa ::=                ProgramB listadesentencias:bloque ProgramE         {
 							                                                    RESULT = bloque;
 							                                                    :};
 
-inlist ::=                  InList ParA VarId Coma CorcheteA
-                            listadecte CorcheteC ParC                   {:System.out.println("[Regla 47] InList");
+inlist ::=                  InList ParA VarId:identificador Coma CorcheteA
+                            listadecte:lista_constantes CorcheteC ParC
+                                                                        {://System.out.println("[Regla 47] InList");
 							                                                s = s + "[Regla 47] InList\n";
-							                                                RESULT = new NodoCondicion("");
+							                                                mensaje += "Reducido: INLIST ( <VarId>, [ <listadecte> ] ) -> <inlist>\n";
+							                                                RESULT = new NodoInList(new NodoIdentificador(identificador), lista_constantes);
 							                                                :};
 
-listadecte ::=              listareal                                   {:System.out.println("[Regla 48] Lista de Cte - Real");
-                                                                            s = s + "[Regla 48] Lista de Cte - Real\n";:}
-                            | listanumero                               {:System.out.println("[Regla 49] Lista de Cte - Numero");
-                                                                            s = s + "[Regla 49] Lista de Cte - Numero\n";:};
+listadecte ::=              listareal:lista
+                                                                        {://System.out.println("[Regla 48] Lista de Cte - Real");
+                                                                            s = s + "[Regla 48] Lista de Cte - Real\n";
+							                                                mensaje += "Reducido: <listareal> -> <listadecte>\n";
+							                                                RESULT = lista;
+                                                                            :}
+                            | listanumero:lista
+                                                                        {://System.out.println("[Regla 49] Lista de Cte - Numero");
+                                                                            s = s + "[Regla 49] Lista de Cte - Numero\n";
+							                                                mensaje += "Reducido: <listanumero> -> <listadecte>\n";
+							                                                RESULT = lista;
+                                                                            :};
 
-listareal ::=               Real:re                                     {:System.out.println("[Regla 50] Lista de Real");
+listareal ::=               Real:re
+                                                                        {://System.out.println("[Regla 50] Lista de Real");
                                                                             s = s + "[Regla 50] Lista de Real\n";
                                                                             listaSimbolos.add(re.toString());
-                                                                            listaSimbolosNombre.add("Real");:}
-                            | listareal PuntoC Real:re                  {:System.out.println("[Regla 51] Lista de Real Multiple");
+                                                                            listaSimbolosNombre.add("Real");
+							                                                mensaje += "Reducido: <Real> -> <listareal>\n";
+                                                                            List<NodoExpresion> expresiones = new ArrayList<NodoExpresion>();
+                                                                            expresiones.add(new NodoConstanteFloat(Float.parseFloat(re)));
+                                                                            RESULT = expresiones;
+                                                                            :}
+                            | listareal:expresiones PuntoC Real:re
+                                                                        {://System.out.println("[Regla 51] Lista de Real Multiple");
                                                                             s = s + "[Regla 51] Lista de Real Multiple\n";
                                                                             listaSimbolos.add(re.toString());
-                                                                            listaSimbolosNombre.add("Real");:};
+                                                                            listaSimbolosNombre.add("Real");
+							                                                mensaje += "Reducido: <listareal> ; <Real> -> <listareal>\n";
+                                                                            expresiones.add(new NodoConstanteFloat(Float.parseFloat(re)));
+                                                                            RESULT = expresiones;
+                                                                            :};
 
-listanumero ::=             Numero:nu                                   {:System.out.println("[Regla 52] Lista de Numero");
+listanumero ::=             Numero:nu
+                                                                        {:System.out.println("[Regla 52] Lista de Numero");
                                                                             s = s + "[Regla 52] Lista de Numero\n";
                                                                             listaSimbolos.add(nu.toString());
-                                                                            listaSimbolosNombre.add("Numero");:}
-                            | listanumero PuntoC Numero:nu              {:System.out.println("[Regla 53] Lista de Numero Multiple");
+                                                                            listaSimbolosNombre.add("Numero");
+							                                                mensaje += "Reducido: <Numero> -> <listanumero>\n";
+                                                                            List<NodoExpresion> expresiones = new ArrayList<NodoExpresion>();
+                                                                            expresiones.add(new NodoConstante(Integer.parseInt(nu)));
+                                                                            RESULT = expresiones;
+                                                                            :}
+                            | listanumero:expresiones PuntoC Numero:nu
+                                                                        {:System.out.println("[Regla 53] Lista de Numero Multiple");
                                                                             s = s + "[Regla 53] Lista de Numero Multiple\n";
                                                                             listaSimbolos.add(nu.toString());
-                                                                            listaSimbolosNombre.add("Numero");:};
+                                                                            listaSimbolosNombre.add("Numero");
+							                                                mensaje += "Reducido: <listanumero> ; <Numero> -> <listanumero>\n";
+                                                                            expresiones.add(new NodoConstante(Integer.parseInt(nu)));
+                                                                            RESULT = expresiones;
+                                                                            :};
