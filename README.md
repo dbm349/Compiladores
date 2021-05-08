@@ -9,6 +9,8 @@
 
 ## Instrucciones de uso
 
+Se requiere instalar graphviz previamente. Se puede hacer desde: https://graphviz.org/download/.
+
 1. Para correr el programa usar el comando
 
         java -jar Analizador.jar
