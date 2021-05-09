@@ -11,7 +11,7 @@ public class NodoIfElse extends NodoIfAbstracto {
     public NodoIfElse(NodoCondicion condicion, List<NodoSentencia> sentencias, List<NodoSentencia> bloqueElse) {
         super("IF");
         this.condicion = condicion;
-        this.nodoBloqueIf = new NodoBloque(sentencias, "BLOQUE_IF");
+        this.nodoBloqueIf = new NodoBloque(sentencias, "THEN");
         this.nodoBloqueElse = new NodoBloque(bloqueElse, "ELSE");
     }
 
