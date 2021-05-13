@@ -255,7 +255,21 @@ public class IDECompilador extends JFrame {
 		gbc_lblResutadosDelAnlisis.gridx = 1;
 		gbc_lblResutadosDelAnlisis.gridy = 8;
 		contentPane.add(lblResutadosDelAnlisis, gbc_lblResutadosDelAnlisis);
-	
+
+		JButton btnNewButton_1 = new JButton("Mostrar tabla");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Tabla t = new Tabla();
+				t.setVisible(true);
+
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton_1.gridx = 4;
+		gbc_btnNewButton_1.gridy = 11;
+		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+
 	}
 	
 	public void saveFile(TextArea txaArchivo, Boolean jopt) {
