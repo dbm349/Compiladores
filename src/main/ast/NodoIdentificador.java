@@ -12,4 +12,8 @@ public class NodoIdentificador extends NodoExpresion {
     public String getDescripcionNodo() {
         return "ID: " + identificador;
     }
+
+    public String getIdentificador() {
+        return identificador;
+    }
 }
