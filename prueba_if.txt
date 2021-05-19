@@ -1,0 +1,14 @@
+DECLARE
+[suma, contador, d1] := [FLOAT, INT, FLOAT]
+[actual, contar, palabra] := [FLOAT, FLOAT, STRING]
+[var] := [INT]
+ENDDECLARE
+
+BEGIN.PROGRAM
+
+If (contar = 1){
+	d1 := 3.14
+}
+
+
+END.PROGRAM

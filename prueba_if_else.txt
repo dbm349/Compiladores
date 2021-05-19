@@ -1,0 +1,16 @@
+DECLARE
+[suma, contador, d1] := [FLOAT, INT, FLOAT]
+[actual, contar, palabra] := [FLOAT, FLOAT, STRING]
+[var] := [INT]
+ENDDECLARE
+
+BEGIN.PROGRAM
+If ((actual > 2)){
+	PRINT  "actualesmayorque2"
+}
+Else {
+	PRINT "no es mayor que 2"
+}
+
+
+END.PROGRAM

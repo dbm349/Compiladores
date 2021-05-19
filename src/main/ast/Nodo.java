@@ -8,7 +8,13 @@ public class Nodo {
     }
 
     protected String getIdNodo() {
-        return "nodo_" + this.hashCode();
+        int hashCode;
+        if (this.hashCode() >= 0) {
+            hashCode = this.hashCode();
+        } else {
+            hashCode = - this.hashCode();
+        }
+        return "nodo_" + hashCode;
     }
 
     public String getDescripcionNodo() {

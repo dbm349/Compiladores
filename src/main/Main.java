@@ -14,7 +14,7 @@ public class Main {
 		FileReader f;
 		Lexico lexer = null;
 		try {
-			f = new FileReader("prueba.txt");
+			f = new FileReader("prueba_b.txt");
 			lexer = new Lexico(f);
 			parser sintactico = new parser(lexer);
 			NodoPrograma programa = (NodoPrograma) sintactico.parse().value;

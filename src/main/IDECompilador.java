@@ -1,36 +1,13 @@
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import main.ast.NodoPrograma;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.GridBagConstraints;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.TextArea;
-import javax.swing.JTextPane;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 
 public class IDECompilador extends JFrame {
 
@@ -255,7 +232,79 @@ public class IDECompilador extends JFrame {
 		gbc_lblResutadosDelAnlisis.gridx = 1;
 		gbc_lblResutadosDelAnlisis.gridy = 8;
 		contentPane.add(lblResutadosDelAnlisis, gbc_lblResutadosDelAnlisis);
-	
+
+		JButton btnNewButton_1 = new JButton("Mostrar tabla");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Tabla t = new Tabla();
+				t.setVisible(true);
+
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton_1.gridx = 4;
+		gbc_btnNewButton_1.gridy = 11;
+		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+
+		JButton btnNewButton_3 = new JButton("Generar AST");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (fr == null) {
+					JOptionPane.showMessageDialog(null, "No hay archivo cargado");
+				} else {
+					Lexico lexer = new Lexico(fr);
+					parser sintactico = new parser(lexer);
+					try {
+						NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
+						FileWriter archivo = new FileWriter("arbol.dot");
+						PrintWriter pw = new PrintWriter(archivo);
+						pw.println(programa.graficar());
+						archivo.close();
+						String cmd = "dot -Tpng arbol.dot -o arbol.png";
+						Runtime.getRuntime().exec(cmd);
+						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
+					} catch (Exception e) {
+						//ignore
+					}
+
+				}
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
+		gbc_btnNewButton_3.insets = new Insets(0, 5, 5, 0);
+		gbc_btnNewButton_3.gridx = 13;
+		gbc_btnNewButton_3.gridy = 4;
+		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
+
+		JButton btnNewButton_2 = new JButton("Mostrar AST");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String path = System.getProperty("user.dir") + "\\arbol.png";
+				System.out.println(path);
+				try {
+					JLabel arbolImage = new JLabel(new ImageIcon(path));
+					JFrame frame = new JFrame("Vista árbol");
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame.setBounds(100,100,1000,500);
+					contentPane.setOpaque(true);
+					JScrollPane scroll = new JScrollPane(arbolImage);
+					scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+					scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+					frame.add(scroll);
+					frame.setVisible(true);
+					frame.setResizable(true);
+				} catch (Exception e) {
+					//ignore
+				}
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
+		gbc_btnNewButton_2.insets = new Insets(0, 5, 5, 0);
+		gbc_btnNewButton_2.gridx = 13;
+		gbc_btnNewButton_2.gridy = 3;
+		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
+
 	}
 	
 	public void saveFile(TextArea txaArchivo, Boolean jopt) {
