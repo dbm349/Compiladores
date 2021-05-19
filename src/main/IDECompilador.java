@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Date;
 
 public class IDECompilador extends JFrame {
 
@@ -16,6 +17,7 @@ public class IDECompilador extends JFrame {
 	private FileReader fr;
 	private File archivo;
 	private String path;
+	private String timestamp;
 
 	/**
 	 * Launch the application.
@@ -87,7 +89,8 @@ public class IDECompilador extends JFrame {
 		JButton btnAbrirArchivo = new JButton("Abrir archivo");
 		btnAbrirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser();
+				File workingDirectory = new File(System.getProperty("user.dir"));
+				JFileChooser fc = new JFileChooser(workingDirectory);
 				fc.showOpenDialog(null);
 				archivo = fc.getSelectedFile();
 				path = archivo.getAbsolutePath();
@@ -261,13 +264,16 @@ public class IDECompilador extends JFrame {
 						PrintWriter pw = new PrintWriter(archivo);
 						pw.println(programa.graficar());
 						archivo.close();
-						String cmd = "dot -Tpng arbol.dot -o arbol.png";
+						timestamp = (new Date()).toString();
+						timestamp = timestamp.replaceAll(" ", "");
+						timestamp = timestamp.replaceAll(":", "");
+						String cmd = "dot -Tpng arbol.dot -o \"" + timestamp + ".png\"";
 						Runtime.getRuntime().exec(cmd);
+						System.out.println("Comando: " + cmd);
 						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
 					} catch (Exception e) {
 						//ignore
 					}
-
 				}
 			}
 		});
@@ -280,8 +286,7 @@ public class IDECompilador extends JFrame {
 		JButton btnNewButton_2 = new JButton("Mostrar AST");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String path = System.getProperty("user.dir") + "\\arbol.png";
-				System.out.println(path);
+				String path = System.getProperty("user.dir") + "\\" + timestamp + ".png";
 				try {
 					JLabel arbolImage = new JLabel(new ImageIcon(path));
 					JFrame frame = new JFrame("Vista árbol");
