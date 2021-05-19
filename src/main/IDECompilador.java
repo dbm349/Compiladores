@@ -1,36 +1,11 @@
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.GridBagConstraints;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.TextArea;
-import javax.swing.JTextPane;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 
 public class IDECompilador extends JFrame {
 
@@ -269,6 +244,34 @@ public class IDECompilador extends JFrame {
 		gbc_btnNewButton_1.gridx = 4;
 		gbc_btnNewButton_1.gridy = 11;
 		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+
+		JButton btnNewButton_2 = new JButton("Mostrar AST");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String path = System.getProperty("user.dir") + "\\arbol.png";
+				System.out.println(path);
+				try {
+					JLabel arbolImage = new JLabel(new ImageIcon(path));
+					JFrame frame = new JFrame("Vista árbol");
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame.setBounds(100,100,1000,500);
+					contentPane.setOpaque(true);
+					JScrollPane scroll = new JScrollPane(arbolImage);
+					scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+					scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+					frame.add(scroll);
+					frame.setVisible(true);
+					frame.setResizable(true);
+				} catch (Exception e) {
+					//ignore
+				}
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
+		gbc_btnNewButton_1.insets = new Insets(0, 5, 5, 0);
+		gbc_btnNewButton_1.gridx = 13;
+		gbc_btnNewButton_1.gridy = 3;
+		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
 
 	}
 	
