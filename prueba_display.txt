@@ -1,0 +1,16 @@
+</ prueba_b.txt/>
+
+
+DECLARE
+[valor] := [INT]
+[resultado] := [INT]
+[contador] := [INT]
+ENDDECLARE
+
+BEGIN.PROGRAM
+
+PRINT  "Prueba_b.txt"
+
+PRINT  "La variable suma"
+
+END.PROGRAM

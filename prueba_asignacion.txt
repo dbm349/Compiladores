@@ -1,0 +1,14 @@
+DECLARE
+[suma, contador, d1] := [FLOAT, INT, FLOAT]
+[actual, contar, palabra] := [FLOAT, FLOAT, STRING]
+[var] := [INT]
+ENDDECLARE
+
+BEGIN.PROGRAM
+
+contador := 0
+suma := 76.5
+contar := 18.22
+
+
+END.PROGRAM

@@ -49,3 +49,4 @@ También en Windows usar el comando
       .\Run.cmd
 
 2. Luego desde la opción "Abrir archivo", seleccionar el archivo ```prueba`_b.txt```.
+
