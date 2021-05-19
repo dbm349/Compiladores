@@ -1,5 +1,7 @@
 package main;
 
+import main.ast.NodoPrograma;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -245,6 +247,36 @@ public class IDECompilador extends JFrame {
 		gbc_btnNewButton_1.gridy = 11;
 		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 
+		JButton btnNewButton_3 = new JButton("Generar AST");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (fr == null) {
+					JOptionPane.showMessageDialog(null, "No hay archivo cargado");
+				} else {
+					Lexico lexer = new Lexico(fr);
+					parser sintactico = new parser(lexer);
+					try {
+						NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
+						FileWriter archivo = new FileWriter("arbol.dot");
+						PrintWriter pw = new PrintWriter(archivo);
+						pw.println(programa.graficar());
+						archivo.close();
+						String cmd = "dot -Tpng arbol.dot -o arbol.png";
+						Runtime.getRuntime().exec(cmd);
+						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
+					} catch (Exception e) {
+						//ignore
+					}
+
+				}
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
+		gbc_btnNewButton_3.insets = new Insets(0, 5, 5, 0);
+		gbc_btnNewButton_3.gridx = 13;
+		gbc_btnNewButton_3.gridy = 4;
+		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
+
 		JButton btnNewButton_2 = new JButton("Mostrar AST");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -268,9 +300,9 @@ public class IDECompilador extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 5, 5, 0);
-		gbc_btnNewButton_1.gridx = 13;
-		gbc_btnNewButton_1.gridy = 3;
+		gbc_btnNewButton_2.insets = new Insets(0, 5, 5, 0);
+		gbc_btnNewButton_2.gridx = 13;
+		gbc_btnNewButton_2.gridy = 3;
 		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
 
 	}

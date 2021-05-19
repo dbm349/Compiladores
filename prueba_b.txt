@@ -10,18 +10,7 @@ ENDDECLARE
 BEGIN.PROGRAM
 
 PRINT  "Prueba_b.txt"
-valor := 10
-resultado := 0
-contador := 0
 
-while (contador <= 9) {
-	contador := contador + 1
-	resultado := resultado + valor
-}
-
-If (INLIST(contador, [2 ; 12 ; 24 ; 48])){
-	resultado := 0
-}
 PRINT  "La variable suma"
 
 END.PROGRAM
