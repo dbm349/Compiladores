@@ -1,7 +1,7 @@
 package main.ast;
 
 public class NodoSalida extends NodoSentencia {
-    private final NodoExpresion constante_string;
+    private final NodoConstanteString constante_string;
 
     public NodoSalida(NodoConstanteString constante_string) {
         super("DISPLAY");
@@ -13,5 +13,12 @@ public class NodoSalida extends NodoSentencia {
         final String miId = this.getIdNodo();
         return super.graficar(idPadre) +
                 constante_string.graficar(miId);
+    }
+
+    @Override
+    public String generarAssembler() {
+        String nombreVariableAssembler = "_" + constante_string.getValor();
+        return "displayString " + nombreVariableAssembler + "\n"
+                + "newLine 1 \n";
     }
 }

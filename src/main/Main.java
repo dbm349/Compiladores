@@ -4,8 +4,6 @@ import main.ast.NodoPrograma;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 
 public class Main {
 
@@ -14,11 +12,14 @@ public class Main {
 		FileReader f;
 		Lexico lexer = null;
 		try {
-			f = new FileReader("prueba_b.txt");
+			f = new FileReader("pruebas/prueba.txt");
 			lexer = new Lexico(f);
 			parser sintactico = new parser(lexer);
 			NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
-			try {
+			System.out.println("------------------------------------------------------");
+			System.out.println(programa.generarAssembler());
+			System.out.println("------------------------------------------------------");
+			/*try {
 				FileWriter archivo = new FileWriter("arbol.dot");
 				PrintWriter pw = new PrintWriter(archivo);
 				pw.println(programa.graficar());
@@ -28,16 +29,11 @@ public class Main {
 			}
 
 			String cmd = "dot -Tpng arbol.dot -o arbol.png";
-			Runtime.getRuntime().exec(cmd);
+			Runtime.getRuntime().exec(cmd);*/
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("No hay un archivo para analizar");
 		} catch (Exception e) {
-			System.out.println("ERROR");
-		}
-		if (lexer != null) {
-			System.out.println("lexer dice: " + lexer.s);
 		}
 	}
 

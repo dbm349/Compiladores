@@ -1,7 +1,5 @@
 package main.ast;
 
-import java.nio.charset.StandardCharsets;
-
 public class NodoConstanteString extends NodoExpresion {
     private final String valor;
 
@@ -26,5 +24,14 @@ public class NodoConstanteString extends NodoExpresion {
             i++;
         }
         return normalizedString.toString();
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    @Override
+    public boolean soyHoja() {
+        return true;
     }
 }

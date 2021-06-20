@@ -12,4 +12,9 @@ public class NodoConstante extends NodoExpresion {
     public String getDescripcionNodo() {
         return "CTE: " + Integer.toString(valor);
     }
+
+    @Override
+    public boolean soyHoja() {
+        return true;
+    }
 }

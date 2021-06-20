@@ -17,4 +17,10 @@ public class NodoAsignacion extends NodoSentencia {
                 identificador.graficar(miId) +
                 expresion.graficar(miId);
     }
+
+    @Override
+    public String generarAssembler() {
+        //TODO:
+        return "";
+    }
 }

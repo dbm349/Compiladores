@@ -16,4 +16,9 @@ public class NodoIdentificador extends NodoExpresion {
     public String getIdentificador() {
         return identificador;
     }
+
+    @Override
+    public boolean soyHoja() {
+        return true;
+    }
 }

@@ -20,4 +20,14 @@ public class NodoIf extends NodoIfAbstracto {
                 condicion.graficar(miId) + bloqueThen.graficar(miId));
         return resultado.toString();
     }
+
+    @Override
+    public String generarAssembler() {
+        return "";
+    }
+
+    @Override
+    public boolean todosSusHijosSonHojas() {
+        return false;
+    }
 }

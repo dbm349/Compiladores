@@ -237,12 +237,14 @@ if ::=                      If ParA cond:condicion ParC LlaveA
 
 asignacion ::=              VarId:identificador Asignacion expresion:expresion
                                                                         {://System.out.println("[Regla 16] Asignacion Expresion");
+                                                                            //TODO: Comprobar si se puede actualizar tabla de símbolos acá
 							                                                s = s + "[Regla 16] Asignacion Expresion\n";
 							                                                mensaje += "Reducido: <VarId> <expresion> -> <asignacion>\n";
                                                                             RESULT= new NodoAsignacion(new NodoIdentificador(identificador), expresion);
 							                                                :}
                             | VarId:identificador Asignacion Const_String:constante
                                                                         {://System.out.println("[Regla 17] Asignacion String");
+                                                                            //TODO: Cambiar valores en la tabla de símbolos
                                                                             s = s + "[Regla 17] Asignacion String\n";
                                                                             listaSimbolos.add(constante.toString());
 							                                                mensaje += "Reducido: <VarId> <Const_String> -> <asignacion>\n";

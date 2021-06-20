@@ -32,5 +32,40 @@ public class NodoPrograma extends Nodo {
 
         return resultado.toString();
     }
+
+    public String generarAssembler() {
+        StringBuilder assembler = new StringBuilder();
+        assembler.append("include macros2.asm\n" +
+                "include number.asm\n" +
+                "\n" +
+                ".MODEL  SMALL\n" +
+                ".386\n" +
+                ".STACK 200h\n");
+        //TODO: Agregar valores tabla símbolos
+
+        assembler.append("\n" +
+                ".CODE\n" +
+                "\n" +
+                "MOV AX,@DATA\n" +
+                "MOV DS,AX\n" +
+                "FINIT; Inicializa el coprocesador\n");
+        for (NodoSentencia sentencia : sentencias) {
+            assembler.append(sentencia.generarAssembler());
+        }
+        assembler.append("FINAL:\n" +
+                "   mov ah, 1 ; pausa, espera que oprima una tecla\n" + //Quizás hay que quitarlo
+                "   int 21h ; AH=1 es el servicio de lectura\n" + //Quizás hay que quitarlo
+                "   MOV AX, 4C00h ; Sale del Dos\n\n" +
+                "END ; final del archivo.\n");
+        return assembler.toString();
+    }
+
+    @Override
+    public Nodo hallarPrimerSubArbolConTodasHojas() {
+        for (NodoSentencia sentencia : sentencias) {
+            //
+        }
+        return null;
+    }
 }
 
