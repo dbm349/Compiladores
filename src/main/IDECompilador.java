@@ -172,7 +172,6 @@ public class IDECompilador extends JFrame {
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(null,"Error");
 					} catch (Exception e2) {
-						// TODO Auto-generated catch block
 						if (!sintactico.Error.isEmpty()) {
 							JOptionPane.showMessageDialog(null,sintactico.Error);
 						}
@@ -207,7 +206,6 @@ public class IDECompilador extends JFrame {
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(null,"Error");
 					} catch (Exception e2) {
-						// TODO Auto-generated catch block
 						if (!sintactico.Error.isEmpty()) {
 							JOptionPane.showMessageDialog(null,sintactico.Error);
 						}
@@ -267,7 +265,7 @@ public class IDECompilador extends JFrame {
 						timestamp = (new Date()).toString();
 						timestamp = timestamp.replaceAll(" ", "");
 						timestamp = timestamp.replaceAll(":", "");
-						String cmd = "dot -Tpng arbol.dot -o \"" + timestamp + ".png\"";
+						String cmd = "dot -Tpng arbol.dot -o " + timestamp + ".png";
 						Runtime.getRuntime().exec(cmd);
 						System.out.println("Comando: " + cmd);
 						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
@@ -286,7 +284,7 @@ public class IDECompilador extends JFrame {
 		JButton btnNewButton_2 = new JButton("Mostrar AST");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String path = System.getProperty("user.dir") + "\\" + timestamp + ".png";
+				String path = System.getProperty("user.dir") + "/" + timestamp + ".png";
 				try {
 					JLabel arbolImage = new JLabel(new ImageIcon(path));
 					JFrame frame = new JFrame("Vista árbol");
