@@ -1,5 +1,9 @@
 package main.ast;
 
+import main.GeneradorAssembler;
+
+import java.util.Arrays;
+
 public class NodoIdentificador extends NodoExpresion {
     private final String identificador;
 
@@ -23,7 +27,8 @@ public class NodoIdentificador extends NodoExpresion {
     }
 
     @Override
-    public String generarAssembler() {
-        return "FLD " +"_@"+ identificador;
+    public boolean generarAssembler() {
+        GeneradorAssembler.escribirASM(Arrays.asList("fld " + identificador), null, true);
+        return true;
     }
 }
