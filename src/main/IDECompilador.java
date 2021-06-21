@@ -265,7 +265,8 @@ public class IDECompilador extends JFrame {
 						timestamp = (new Date()).toString();
 						timestamp = timestamp.replaceAll(" ", "");
 						timestamp = timestamp.replaceAll(":", "");
-						String cmd = "dot -Tpng arbol.dot -o " + timestamp + ".png";
+						//String cmd = "dot -Tpng arbol.dot -o '" + timestamp + ".png'";	// windows
+						String cmd = "dot -Tpng arbol.dot -o " + timestamp + ".png";		// linux
 						Runtime.getRuntime().exec(cmd);
 						System.out.println("Comando: " + cmd);
 						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
@@ -284,7 +285,8 @@ public class IDECompilador extends JFrame {
 		JButton btnNewButton_2 = new JButton("Mostrar AST");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String path = System.getProperty("user.dir") + "/" + timestamp + ".png";
+				//String path = System.getProperty("user.dir") + "\\" + timestamp + ".png"; // windows
+				String path = System.getProperty("user.dir") + "/" + timestamp + ".png";	// linux
 				try {
 					JLabel arbolImage = new JLabel(new ImageIcon(path));
 					JFrame frame = new JFrame("Vista árbol");

@@ -14,7 +14,7 @@ public class NodoIdentificador extends NodoExpresion {
     }
 
     public String getIdentificador() {
-        return identificador;
+        return this.identificador;
     }
 
     @Override

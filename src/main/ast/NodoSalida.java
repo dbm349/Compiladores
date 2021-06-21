@@ -1,5 +1,10 @@
 package main.ast;
 
+import main.GeneradorAssembler;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class NodoSalida extends NodoSentencia {
     private final NodoConstanteString constante_string;
 
@@ -15,10 +20,13 @@ public class NodoSalida extends NodoSentencia {
                 constante_string.graficar(miId);
     }
 
-    @Override
-    public String generarAssembler() {
+    public boolean generarAssembler() {
         String nombreVariableAssembler = "_" + constante_string.getValor();
-        return "displayString " + nombreVariableAssembler + "\n"
-                + "newLine 1 \n";
+        /*return "displayString " + nombreVariableAssembler + "\n"
+                + "newLine 1 \n";*/
+
+        GeneradorAssembler.escribirASM(Arrays.asList(
+            "displayString " + nombreVariableAssembler), null, true);
+        return true;
     }
 }

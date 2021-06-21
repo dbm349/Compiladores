@@ -30,7 +30,7 @@ public interface RecorredorArbol {
     /*
     * Lo del video de las profesoras
      */
-    String generarAssembler();
+    boolean generarAssembler();
 
 
 }

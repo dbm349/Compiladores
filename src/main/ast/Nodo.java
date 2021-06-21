@@ -52,7 +52,9 @@ public class Nodo implements RecorredorArbol {
     }
 
     @Override
-    public String generarAssembler() {
-        return "";
+    public boolean generarAssembler(){
+
+        return true;
     }
+
 }

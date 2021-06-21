@@ -16,23 +16,6 @@ public class Tabla extends JFrame {
 
     private JPanel contentPane;
 
-    /**
-     * Launch the application.
-     */
-/*    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Tabla frame = new Tabla();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }*/
-
-
     // Columnas de la tabla de simbolos
     public enum Columna {
         NOMBRE(0),  // Nombre del token
@@ -41,9 +24,9 @@ public class Tabla extends JFrame {
         VALOR(3),   // Valor que adquiere
         LEN(4);     // Longitud si es CTE-STR
 
-        private int numCol;
+        private final int numCol;
 
-        private Columna(int numCol) {
+        Columna(int numCol) {
             this.numCol = numCol;
         }
 
@@ -81,9 +64,9 @@ public class Tabla extends JFrame {
         scrollBar.setVisible(true);
 
 
-        File archivo = null;
+        File archivo;
         FileReader FileR=null;
-        BufferedReader BufferedR=null;
+        BufferedReader BufferedR;
 
         try {
             //archivo=new File(this.ruta + "\\ts.txt");
@@ -93,7 +76,7 @@ public class Tabla extends JFrame {
             String informacion;
 
             // Levanto la tabla de simbolos a memoria
-            if (! parsearTabla("ts.txt")){
+            if (! levantarTablaEnMemoria("ts.txt")){
                 System.exit(-1);
             }
 
@@ -117,7 +100,7 @@ public class Tabla extends JFrame {
             contentPane.add(btnCerrar, BorderLayout.SOUTH);
         }
         catch (Exception e) {
-
+            // Do nothing
         }
         finally {
             try {
@@ -125,19 +108,19 @@ public class Tabla extends JFrame {
                     FileR.close();
                 }
             }
-            catch (IOException e2){{}
+            catch (IOException e2){
+                // Do nothing
             }
         }
     }
 
 
-    private boolean parsearTabla(String nombreArchivo){
-        Boolean sinErrores = true;
+    private boolean levantarTablaEnMemoria(String nombreArchivo){
+        boolean sinErrores = true;
 
-        String linea    = new String();
-        String output   = new String();
+        String linea;
 
-        File archivo        = null;
+        File archivo;
         FileReader reader   = null;
         BufferedReader buffReader;
 
@@ -150,7 +133,6 @@ public class Tabla extends JFrame {
 
                 // Parseo cada linea con el delimitador ','(coma)
                 String[] splitLine = linea.split("\\,");
-                System.out.println(splitLine);
 
                 // Diccionario <key>:<value> para cada elemento de la columna
                 Map<Columna, String> fila = new HashMap<Columna, String>();
@@ -162,7 +144,7 @@ public class Tabla extends JFrame {
         }
         catch (Exception e) {
             System.out.println("[Tabla.java] - Error parseando tabla de simbolos a memoria");
-            sinErrores = true;
+            sinErrores = false;
         }
         finally {
             try {
@@ -171,16 +153,58 @@ public class Tabla extends JFrame {
             }
             catch (IOException e2){
                 // Do nothing
-                sinErrores = true;
             }
         }
         return sinErrores;
     }
 
 
+    public static boolean generarASM() {
+       /*
+       List<Map<Columna, String>> filas = leerArchivo(filename);
+        List<String> lineas = new ArrayList<String>();
+        lineas.add(".DATA");
+        for (Map<Columna, String> fila : filas) {
+            String nombreEscapado = escaparNombre(fila.get(Columna.NOMBRE));
+            switch(fila.get(Columna.TOKEN)) {
+                case "CTE_INT":
+                case "CTE_FLOAT":
+                    lineas.add("\t" + nombreEscapado + "\tdd\t" + fila.get(Columna.VALOR));
+                    break;
+                case "CTE_STRING":
+                    lineas.add("\t" + nombreEscapado + "\tdb\t" + escaparValorString(fila.get(Columna.VALOR)) + ",'$'");
+                    break;
+                default:
+                    lineas.add("\t" + nombreEscapado + "\tdd\t?");
+                    break;
+            }
+        }
+        GeneradorAssembler.escribirASM(lineas, null, true);
+
+        */
+        return true;
+    }
+
+    public static String escaparNombre(String nombre) {
+        String nombreEscapado = "";
+        for (int i = 0; i < nombre.length(); i++) {
+            String a = nombre.substring(i, i+1);
+            if (!a.matches("[A-Za-z0-9@_]"))
+                a = "%x" + Integer.toHexString((int) a.charAt(0));
+            nombreEscapado += a;
+        }
+        return nombreEscapado;
+    }
+
+    public static String escaparValorString(String valorString) {
+        if (valorString.contains("\"")) return "'" + valorString + "'";
+        return "\"" + valorString + "\"";
+    }
+
+
     private String leerArchivoLineaPorLinea(String nombreArchivo){
-        String linea    = new String();
-        String output   = new String();
+        String linea;
+        String output = "";
 
         File archivo        = null;
         FileReader reader   = null;

@@ -21,9 +21,9 @@ public class NodoIf extends NodoIfAbstracto {
         return resultado.toString();
     }
 
-    @Override
-    public String generarAssembler() {
-        return "";
+    public boolean generarAssembler() {
+
+        return true;
     }
 
     @Override
