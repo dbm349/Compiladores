@@ -12,7 +12,9 @@ import main.ast.*;
 
 parser code
 {:
+
 	static File f = new File("ts.txt");
+	private static final String CHAR_VACIO = "$";
 	private static BufferedWriter bw;
 	String s = "";
 	String mensaje = "";
@@ -37,15 +39,15 @@ parser code
 			e.printStackTrace();
 		}
 	
-		String Linea = "";	
+		String Linea = "";
 
 		for (int i = 0; i < listaSimbolos.size(); i++) {
 			String A = listaSimbolos.get(i);
 			String B = listaSimbolosNombre.get(i);
 			if (B=="Const_String"){
-				Linea="_"+A+","+B+",,"+A+","+A.length();
+				Linea="_"+A+","+B+","+ CHAR_VACIO +","+A+","+A.length();
 			}else{
-				Linea="_"+A+","+B+",,"+A+",";
+				Linea="_"+A+","+B+","+ CHAR_VACIO +","+A+","+CHAR_VACIO;
 			}
 			
  			try {
@@ -83,7 +85,8 @@ parser code
 		for (int i = 0; i < listaVarId.size(); i++) {
 			String ID = listaVarId.get(i);
 			String T = listaTipos.get(--j);
-			Linea=ID+",VarId,"+T+",,";
+			//Linea=ID+",VarId,"+T+",,";
+			Linea=ID+",VarId,"+T+","+ CHAR_VACIO +"," + CHAR_VACIO;
  			try {
 				bw.write(Linea);
 				bw.newLine();

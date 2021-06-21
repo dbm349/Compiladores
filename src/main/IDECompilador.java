@@ -42,7 +42,7 @@ public class IDECompilador extends JFrame {
 		setResizable(false);
 		setTitle("Compilador - Grupo 1");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 544, 642);
+		setBounds(100, 100, 650, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -239,9 +239,9 @@ public class IDECompilador extends JFrame {
 		JButton btnNewButton_1 = new JButton("Mostrar tabla");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String temp = "";
 				Tabla t = new Tabla();
 				t.setVisible(true);
-
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
