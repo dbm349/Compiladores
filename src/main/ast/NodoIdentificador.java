@@ -21,4 +21,9 @@ public class NodoIdentificador extends NodoExpresion {
     public boolean soyHoja() {
         return true;
     }
+
+    @Override
+    public String generarAssembler() {
+        return "FLD " +"_@"+ identificador;
+    }
 }

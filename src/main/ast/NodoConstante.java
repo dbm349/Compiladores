@@ -1,5 +1,9 @@
 package main.ast;
 
+import main.GeneradorAssembler;
+
+import java.util.Arrays;
+
 public class NodoConstante extends NodoExpresion {
     private final int valor;
 
@@ -15,6 +19,12 @@ public class NodoConstante extends NodoExpresion {
 
     @Override
     public boolean soyHoja() {
+        return true;
+    }
+
+    @Override
+    public boolean generarAssembler() {
+        GeneradorAssembler.escribirASM(Arrays.asList("fld " + valor), null, true);
         return true;
     }
 }

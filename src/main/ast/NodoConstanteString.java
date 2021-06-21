@@ -1,5 +1,9 @@
 package main.ast;
 
+import main.GeneradorAssembler;
+
+import java.util.Arrays;
+
 public class NodoConstanteString extends NodoExpresion {
     private final String valor;
 
@@ -34,4 +38,11 @@ public class NodoConstanteString extends NodoExpresion {
     public boolean soyHoja() {
         return true;
     }
+
+    @Override
+    public boolean generarAssembler() {
+        GeneradorAssembler.escribirASM(Arrays.asList("fld " + valor), null, true);
+        return true;
+    }
+
 }
