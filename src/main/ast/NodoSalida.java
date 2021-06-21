@@ -21,9 +21,7 @@ public class NodoSalida extends NodoSentencia {
     }
 
     public boolean generarAssembler() {
-        String nombreVariableAssembler = "_" + constante_string.getValor();
-        /*return "displayString " + nombreVariableAssembler + "\n"
-                + "newLine 1 \n";*/
+        String nombreVariableAssembler = "_@" + constante_string.getValor();
 
         GeneradorAssembler.escribirASM(Arrays.asList(
             "displayString " + nombreVariableAssembler), null, true);

@@ -24,7 +24,6 @@ public class NodoAsignacion extends NodoSentencia {
 
     public boolean generarAssembler() {
         //TODO: actualizar tabla de simbolos con su valor
-        //TODO: generar el assembler correspondiente
 
         GeneradorAssembler.escribirASM(Arrays.asList(
                 "fstp" + identificador.getIdentificador()), null, true);

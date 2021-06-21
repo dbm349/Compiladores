@@ -64,7 +64,6 @@ public class NodoPrograma extends Nodo {
         for (NodoSentencia sentencia: sentencias) {
             sentencia.generarASM();
         }
-
         return true;
     }
 }
