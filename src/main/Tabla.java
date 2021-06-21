@@ -48,7 +48,7 @@ public class Tabla extends JFrame {
     // tabla de simbolos
     private List<Map<Columna, String>> ts = new ArrayList<Map<Columna, String>>();
 
-    private static ArrayList<String> tsAssembler = new ArrayList<String>();
+
 
     public Tabla() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -81,11 +81,6 @@ public class Tabla extends JFrame {
             if (! levantarTablaEnMemoria("ts.txt")){
                 System.exit(-1);
             }
-
-            // Creo el assembler para la tabla levantada
-            gASM();
-
-            // System.out.println(this.ts.toString());
 
             DefaultListModel lista = new DefaultListModel();
 
@@ -163,17 +158,13 @@ public class Tabla extends JFrame {
         return sinErrores;
     }
 
-
-    // Wrapper estatico del metodo gASM()
-    public static void generarASM(){
-        GeneradorAssembler.escribirASM(tsAssembler, null, true);
-    }
-
     // Wrappeado por el metodo estatico generarASM()
-    private boolean gASM() {
+    public boolean generarASM() {
+
+        ArrayList<String> tsToAssembler = new ArrayList<String>();
 
         // Almacena el assembler a generar
-        tsAssembler.add(".DATA");
+        tsToAssembler.add(".DATA");
 
         // Paso cada linea de la ts a assembler
         for (Map<Columna, String> fila : this.ts) {
@@ -184,17 +175,17 @@ public class Tabla extends JFrame {
             switch(fila.get(Columna.TOKEN)) {
                 case "Numero":
                 case "Real":
-                    tsAssembler.add("\t" + nombreEscapado + "\tdd\t" + fila.get(Columna.VALOR));
+                    tsToAssembler.add("\t" + nombreEscapado + "\tdd\t" + fila.get(Columna.VALOR));
                     break;
                 case "Const_String":
-                    tsAssembler.add("\t" + nombreEscapado + "\tdb\t" + fila.get(Columna.VALOR) + ",'$'");
+                    tsToAssembler.add("\t" + nombreEscapado + "\tdb\t" + fila.get(Columna.VALOR) + ",'$'");
                     break;
                 default:
-                    tsAssembler.add("\t" + nombreEscapado + "\tdd\t?");
+                    tsToAssembler.add("\t" + nombreEscapado + "\tdd\t?");
                     break;
             }
         }
-
+        GeneradorAssembler.escribirASM(tsToAssembler, null, true);
         return true;
     }
 

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Date;
 
 public class IDECompilador extends JFrame {
@@ -18,6 +19,7 @@ public class IDECompilador extends JFrame {
 	private File archivo;
 	private String path;
 	private String timestamp;
+	private Tabla tabla;
 
 	/**
 	 * Launch the application.
@@ -112,6 +114,7 @@ public class IDECompilador extends JFrame {
 				}
 			}
 		});
+
 		GridBagConstraints gbc_btnAbrirArchivo = new GridBagConstraints();
 		gbc_btnAbrirArchivo.gridwidth = 2;
 		gbc_btnAbrirArchivo.fill = GridBagConstraints.HORIZONTAL;
@@ -196,7 +199,6 @@ public class IDECompilador extends JFrame {
 				if (fr == null) {
 					JOptionPane.showMessageDialog(null,"No hay archivo cargado");
 				}else {
-					//saveFile(txaArchivo,false);
 					Lexico lexer = new Lexico(fr);
 					parser sintactico = new parser(lexer);
 					try {
@@ -234,12 +236,12 @@ public class IDECompilador extends JFrame {
 		gbc_lblResutadosDelAnlisis.gridy = 8;
 		contentPane.add(lblResutadosDelAnlisis, gbc_lblResutadosDelAnlisis);
 
+
 		JButton btnNewButton_1 = new JButton("Mostrar tabla");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String temp = "";
-				Tabla t = new Tabla();
-				t.setVisible(true);
+				tabla = new Tabla();
+				tabla.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
@@ -258,17 +260,53 @@ public class IDECompilador extends JFrame {
 					parser sintactico = new parser(lexer);
 					try {
 						NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
+
 						FileWriter archivo = new FileWriter("arbol.dot");
 						PrintWriter pw = new PrintWriter(archivo);
 						pw.println(programa.graficar());
 						archivo.close();
+
+						System.out.println("------------------------------------------------------");
+
+						GeneradorAssembler.escribirASM(Arrays.asList(
+								"include macros2.asm",
+								"include number.asm",
+								".MODEL SMALL",
+								".386",
+								".STACK 200h"), null, false);
+
+						if (tabla == null){
+							tabla = new Tabla();
+						}
+						tabla.generarASM();
+
+						GeneradorAssembler.escribirASM(Arrays.asList(
+								".CODE",
+								"MOV AX,@DATA",
+								"MOV DS,AX",
+								"FINIT; Inicializa el coprocesador"
+						), null, true);
+
+						programa.generarAssembler();
+
+						GeneradorAssembler.escribirASM(Arrays.asList(
+								"FINAL:",
+								"mov ah, 1 ; pausa, espera que oprima una tecla", 	//Quizás hay que quitarlo
+								"int 21h ; AH=1 es el servicio de lectura",		  	//Quizás hay que quitarlo
+								"MOV AX, 4C00h ; Sale del Dos",
+								"END ; final del archivo."), null, true);
+
+						System.out.println("------------------------------------------------------");
+
 						timestamp = (new Date()).toString();
 						timestamp = timestamp.replaceAll(" ", "");
 						timestamp = timestamp.replaceAll(":", "");
+
 						//String cmd = "dot -Tpng arbol.dot -o '" + timestamp + ".png'";	// windows
 						String cmd = "dot -Tpng arbol.dot -o " + timestamp + ".png";		// linux
 						Runtime.getRuntime().exec(cmd);
 						System.out.println("Comando: " + cmd);
+
 						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
 					} catch (Exception e) {
 						//ignore
