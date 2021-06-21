@@ -271,9 +271,10 @@ public class IDECompilador extends JFrame {
 						GeneradorAssembler.escribirASM(Arrays.asList(
 								"include macros2.asm",
 								"include number.asm",
-								".MODEL SMALL",
+								".MODEL SMALL", // no deberia ser ".MODEL LARGE" ?
 								".386",
 								".STACK 200h"), null, false);
+
 
 						if (tabla == null){
 							tabla = new Tabla();

@@ -158,7 +158,7 @@ public class Tabla extends JFrame {
         return sinErrores;
     }
 
-    // Wrappeado por el metodo estatico generarASM()
+
     public boolean generarASM() {
 
         ArrayList<String> tsToAssembler = new ArrayList<String>();
@@ -189,6 +189,7 @@ public class Tabla extends JFrame {
         return true;
     }
 
+
     public static String escaparNombre(String nombre) {
         String nombreEscapado = "";
         for (int i = 0; i < nombre.length(); i++) {
@@ -204,7 +205,6 @@ public class Tabla extends JFrame {
         if (valorString.contains("\"")) return "'" + valorString + "'";
         return "\"" + valorString + "\"";
     }
-
 
     private String leerArchivoLineaPorLinea(String nombreArchivo){
         String linea;

@@ -9,4 +9,8 @@ public class NodoExpresion extends Nodo {
     public String getValor() {
         return "";
     }
+
+    public void generarASM() {
+
+    }
 }
