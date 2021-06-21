@@ -18,7 +18,6 @@ public class NodoDivision extends NodoExpresionBinaria {
 
     @Override
     public boolean generarAssembler() {
-
         if (todosSusHijosSonHojas()){
             derecha.generarAssembler();
             izquierda.generarAssembler();
