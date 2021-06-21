@@ -48,6 +48,8 @@ public class Tabla extends JFrame {
     // tabla de simbolos
     private List<Map<Columna, String>> ts = new ArrayList<Map<Columna, String>>();
 
+    private static ArrayList<String> tsAssembler = new ArrayList<String>();
+
     public Tabla() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 450, 300);
@@ -69,8 +71,8 @@ public class Tabla extends JFrame {
         BufferedReader BufferedR;
 
         try {
-            //archivo=new File(this.ruta + "\\ts.txt");
-            archivo=new File(this.ruta + "/ts.txt");
+            //archivo=new File(this.ruta + "\\ts.txt");           // windows
+            archivo=new File(this.ruta + "/ts.txt");    // linux
             FileR=new FileReader(archivo);
             BufferedR= new BufferedReader(FileR);
             String informacion;
@@ -80,7 +82,10 @@ public class Tabla extends JFrame {
                 System.exit(-1);
             }
 
-            System.out.println(this.ts.toString());
+            // Creo el assembler para la tabla levantada
+            gASM();
+
+            // System.out.println(this.ts.toString());
 
             DefaultListModel lista = new DefaultListModel();
 
@@ -159,29 +164,37 @@ public class Tabla extends JFrame {
     }
 
 
-    public static boolean generarASM() {
-       /*
-       List<Map<Columna, String>> filas = leerArchivo(filename);
-        List<String> lineas = new ArrayList<String>();
-        lineas.add(".DATA");
-        for (Map<Columna, String> fila : filas) {
-            String nombreEscapado = escaparNombre(fila.get(Columna.NOMBRE));
+    // Wrapper estatico del metodo gASM()
+    public static void generarASM(){
+        GeneradorAssembler.escribirASM(tsAssembler, null, true);
+    }
+
+    // Wrappeado por el metodo estatico generarASM()
+    private boolean gASM() {
+
+        // Almacena el assembler a generar
+        tsAssembler.add(".DATA");
+
+        // Paso cada linea de la ts a assembler
+        for (Map<Columna, String> fila : this.ts) {
+            //String nombreEscapado = escaparNombre(fila.get(Columna.NOMBRE));
+
+            String nombreEscapado = fila.get(Columna.NOMBRE);
+
             switch(fila.get(Columna.TOKEN)) {
-                case "CTE_INT":
-                case "CTE_FLOAT":
-                    lineas.add("\t" + nombreEscapado + "\tdd\t" + fila.get(Columna.VALOR));
+                case "Numero":
+                case "Real":
+                    tsAssembler.add("\t" + nombreEscapado + "\tdd\t" + fila.get(Columna.VALOR));
                     break;
-                case "CTE_STRING":
-                    lineas.add("\t" + nombreEscapado + "\tdb\t" + escaparValorString(fila.get(Columna.VALOR)) + ",'$'");
+                case "Const_String":
+                    tsAssembler.add("\t" + nombreEscapado + "\tdb\t" + fila.get(Columna.VALOR) + ",'$'");
                     break;
                 default:
-                    lineas.add("\t" + nombreEscapado + "\tdd\t?");
+                    tsAssembler.add("\t" + nombreEscapado + "\tdd\t?");
                     break;
             }
         }
-        GeneradorAssembler.escribirASM(lineas, null, true);
 
-        */
         return true;
     }
 

@@ -25,6 +25,7 @@ public class Main {
 					".386",
 					".STACK 200h"), null, false);
 
+			Tabla t = new Tabla();
 			Tabla.generarASM();
 
 			GeneradorAssembler.escribirASM(Arrays.asList(
