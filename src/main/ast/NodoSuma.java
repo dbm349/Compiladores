@@ -10,7 +10,7 @@ public class NodoSuma extends NodoExpresionBinaria {
 
     public String generarAssembler() {
 
-        ConstantesASM.data.append(this.getID()).append(" DW, ?");
+        ConstantesASM.data.append(this.getID()).append(" DD, ?");
 
         String result = "";
         if (!izquierda.soyHoja()) {
