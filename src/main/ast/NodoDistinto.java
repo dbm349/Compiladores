@@ -31,9 +31,9 @@ public class NodoDistinto extends NodoComparacionExpresiones {
         stringBuilder.append("JNE DIST_TRUE").append(distNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");
         stringBuilder.append("JMP DIST_END").append(distNumber).append("\n");
-        stringBuilder.append("DIST_TRUE").append(distNumber).append(":").append("\n");
+        stringBuilder.append("\nDIST_TRUE").append(distNumber).append(":").append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 1").append("\n");
-        stringBuilder.append("DIST_END").append(distNumber).append(":").append("\n");
+        stringBuilder.append("\nDIST_END").append(distNumber).append(":").append("\n");
         return stringBuilder.toString();
     }
 }

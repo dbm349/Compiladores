@@ -36,9 +36,9 @@ public class NodoAnd extends NodoCondicionBooleana {
         stringBuilder.append(comparar);
         stringBuilder.append("MOV ").append(this.getID()).append(", 1").append("\n");
         stringBuilder.append("JMP INST_AND_END").append(andNumber).append("\n");
-        stringBuilder.append("INST_AND_FALSE").append(andNumber).append(":").append("\n");
+        stringBuilder.append("\nINST_AND_FALSE").append(andNumber).append(":").append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");
-        stringBuilder.append("INST_AND_END").append(andNumber).append(":").append("\n");
+        stringBuilder.append("\nINST_AND_END").append(andNumber).append(":").append("\n");
         return stringBuilder.toString();
     }
 }
