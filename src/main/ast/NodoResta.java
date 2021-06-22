@@ -27,10 +27,10 @@ public class NodoResta extends NodoExpresionBinaria {
         }
 
         result += "\n;inicio resta;\n";
-        result += "FLD " + derecha.getID() + "\n";
-        result += "FLD " + izquierda.getID() + "\n";
-        result += "FSUB" + "\n";
-        result += "FSTP " + this.getID() + "\n";
+        result += "\tFLD " + derecha.getID() + "\n";
+        result += "\tFLD " + izquierda.getID() + "\n";
+        result += "\tFSUB" + "\n";
+        result += "\tFSTP " + this.getID() + "\n";
         result += ";fin resta;\n";
         return result;
     }
