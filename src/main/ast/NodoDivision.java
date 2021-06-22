@@ -16,7 +16,7 @@ public class NodoDivision extends NodoExpresionBinaria {
 
     @Override
     public String generarAssembler() {
-        ConstantesASM.data.append(this.getID()).append(" DD, ?");
+        ConstantesASM.data.append(this.getID()).append(" DD, ?\n");
         String result = "";
         if (!izquierda.soyHoja()) {
             result += izquierda.generarAssembler();
