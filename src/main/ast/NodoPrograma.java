@@ -1,5 +1,8 @@
 package main.ast;
 
+import main.services.TablaService;
+
+import java.io.IOException;
 import java.util.List;
 
 public class NodoPrograma extends Nodo {
@@ -40,9 +43,16 @@ public class NodoPrograma extends Nodo {
                 "\n" +
                 ".MODEL  SMALL\n" +
                 ".386\n" +
-                ".STACK 200h\n");
+                ".STACK 200h\n" +
+                ".DATA\n\n");
         //TODO: Agregar valores tabla símbolos
-
+        TablaService tablaService = new TablaService("ts.txt");
+        try {
+            String tabla = tablaService.generarASM();
+            assembler.append(tabla);
+        } catch (IOException e) {
+            System.out.println("No generó las variables");
+        }
         assembler.append("\n" +
                 ".CODE\n" +
                 "\n" +

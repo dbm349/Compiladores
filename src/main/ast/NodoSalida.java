@@ -17,7 +17,7 @@ public class NodoSalida extends NodoSentencia {
 
     @Override
     public String generarAssembler() {
-        String nombreVariableAssembler = "_" + constante_string.getValor();
+        String nombreVariableAssembler = "_" + constante_string.getValor().replace("\"", "").replace(".", "punto").replace(" ", "");
         return "displayString " + nombreVariableAssembler + "\n"
                 + "newLine 1 \n";
     }
