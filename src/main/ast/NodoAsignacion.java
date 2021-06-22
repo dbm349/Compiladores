@@ -20,7 +20,12 @@ public class NodoAsignacion extends NodoSentencia {
 
     @Override
     public String generarAssembler() {
-        //TODO:
-        return "";
+        StringBuilder stringBuilder = new StringBuilder();
+        if (! expresion.soyHoja()) {
+            stringBuilder.append(expresion.generarAssembler());
+        }
+        stringBuilder.append("MOV AX, ").append(expresion.getID()).append("\n");
+        stringBuilder.append("MOV ").append(this.getID()).append(", AX").append("\n");
+        return stringBuilder.toString();
     }
 }
