@@ -39,8 +39,5 @@ public class NodoOr extends NodoCondicionBooleana {
         stringBuilder.append("MOV ").append(this.getID()).append(", 1").append("\n");
         stringBuilder.append("INST_OR_END").append(orNumber).append(":").append("\n");
         return stringBuilder.toString();
-        /*String comparar = "CMP " + condicionIzquierda.getID() + ", " + condicionDerecha.getID();
-        stringBuilder.append(comparar);
-        return stringBuilder.toString();*/
     }
 }

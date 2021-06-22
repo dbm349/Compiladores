@@ -9,7 +9,7 @@ ENDDECLARE
 
 BEGIN.PROGRAM
 
-If (1 = 1){
+If ((1 = 1) AND (0 = 1)){
     PRINT  "Entra al primer if"
 }
 If ((1 = 0) OR (1 = 1)){
