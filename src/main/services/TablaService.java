@@ -29,10 +29,12 @@ public class TablaService {
                     if (data.length < 4) {
                         value  = " DW ?";
                         data[0] = "@__" + data[0];
+                        data[0] = data[0].replace("<","@menor").replace(">","@mayor");
                     } else {
                         value = data[3];
                         switch (data[1]) {
                             case "Const_String":
+                                data[0] = data[0].replace("<","@menor").replace(">","@mayor");
                                 value = " db \"" + value + "\"" + ", " + value.length() + ", " + value.length() + ", '$'";
                                 break;
                             case "Numero":

@@ -6,7 +6,8 @@ public class NodoConstanteString extends NodoExpresion {
     public NodoConstanteString(String valor) {
         super("CTE-STR");
         this.valor = valor;
-        this.setID("_" + valor.replace("\"", "").replace(" ", "").replace(".","punto").replace(",","coma"));
+        this.setID("_" + valor.replace("\"", "").replace(" ", "").replace(".","punto").replace(",","coma")
+                .replace("<","@menor").replace(">","@mayor"));
     }
 
     @Override
