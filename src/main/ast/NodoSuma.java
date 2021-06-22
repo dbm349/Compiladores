@@ -4,8 +4,14 @@ import main.assembler.recorrido.ConstantesASM;
 
 public class NodoSuma extends NodoExpresionBinaria {
 
+    private static int count = 0;
+    private final int sumNumber;
+
     public NodoSuma(NodoExpresion izquierda, NodoExpresion derecha) {
         super("+", izquierda, derecha);
+        count++;
+        sumNumber = count;
+        this.setID("@__SUMA" + sumNumber);
     }
 
     public String generarAssembler() {
