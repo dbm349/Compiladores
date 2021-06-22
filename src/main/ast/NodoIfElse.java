@@ -4,6 +4,9 @@ import java.util.List;
 
 public class NodoIfElse extends NodoIfAbstracto {
 
+    static int count = 0;
+    protected int ifElseNumber;
+
     private final NodoCondicion condicion;
     private final NodoBloque nodoBloqueIf;
     private final NodoBloque nodoBloqueElse;
@@ -13,6 +16,8 @@ public class NodoIfElse extends NodoIfAbstracto {
         this.condicion = condicion;
         this.nodoBloqueIf = new NodoBloque(sentencias, "THEN");
         this.nodoBloqueElse = new NodoBloque(bloqueElse, "ELSE");
+        count++;
+        ifElseNumber = count;
     }
 
     @Override
@@ -25,5 +30,20 @@ public class NodoIfElse extends NodoIfAbstracto {
         resultado.append(nodoBloqueElse.graficar(miId));
 
         return resultado.toString();
+    }
+
+    @Override
+    public String generarAssembler() {
+        return condicion.generarAssembler()
+                + "MOV AX, 1\n"
+                + "MOV BX, " + condicion.getID()  + "\n"
+                + "CMP AX, BX \n"
+                + "CMP " + condicion.getID() + ", 1\n"
+                + "JNE INST_IF_ELSE" + ifElseNumber + "\n"
+                + nodoBloqueIf.generarAssembler()
+                + "JMP INST_IF_END" + ifElseNumber + "\n"
+                + "INST_IF_ELSE" + ifElseNumber + ":\n"
+                + nodoBloqueElse.generarAssembler()
+                + "INST_IF_END" + ifElseNumber + ":\n";
     }
 }
