@@ -31,9 +31,9 @@ public class NodoMayor extends NodoComparacionExpresiones {
         stringBuilder.append("JA GREATER_TRUE").append(graterNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");
         stringBuilder.append("JMP GREATER_END").append(graterNumber).append("\n");
-        stringBuilder.append("GREATER_TRUE").append(graterNumber).append(":").append("\n");
+        stringBuilder.append("\nGREATER_TRUE").append(graterNumber).append(":").append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 1").append("\n");
-        stringBuilder.append("GREATER_END").append(graterNumber).append(":").append("\n");
+        stringBuilder.append("\nGREATER_END").append(graterNumber).append(":").append("\n");
         return stringBuilder.toString();
     }
 }

@@ -29,12 +29,12 @@ public class NodoDivision extends NodoExpresionBinaria {
         result += "DIV BX" + "\n";
         result += "MOV " + this.getID() + ", [0000 + AL]" + "\n";*/
 
-        result += "\n;inicio division;'\n";
-        result += "FLD " + derecha.getID() + "\n";
-        result += "FLD " + izquierda.getID() + "\n";
-        result += "FDIV" + "\n";
-        result += "FSTP " + this.getID() + "\n";
-        result += "\n\n;fin division;\n";
+        result += "\n;inicio division/\n";
+        result += "\tFLD " + derecha.getID() + "\n";
+        result += "\tFLD " + izquierda.getID() + "\n";
+        result += "\tFDIV" + "\n";
+        result += "\tFSTP " + this.getID() + "\n";
+        result += ";fin division/\n\n";
         return result;
     }
 }

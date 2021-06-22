@@ -29,13 +29,13 @@ public class NodoWhile extends NodoSentencia {
     @Override
     public String generarAssembler() {
         return  "\n\nINST_WHILE_BEGIN" + this.whileCount + ":\n"
-                + "\t" + this.condicion.generarAssembler()
-                + "\tMOV AX, 1\n"
-                + "\tMOV BX, " + this.condicion.getID()  + "\n"
-                + "\tCMP AX, BX \n"
-                + "\tCMP " + this.condicion.getID() + ", 1\n"
+                + this.condicion.generarAssembler()
+                + "MOV AX, 1\n"
+                + "MOV BX, " + this.condicion.getID()  + "\n"
+                + "CMP AX, BX \n"
+                + "CMP " + this.condicion.getID() + ", 1\n"
                 + "JNE INST_WHILE_END" + this.whileCount + "\n"
-                + "\t" + this.bloque.generarAssembler()
+                + this.bloque.generarAssembler()
                 + "JMP INST_WHILE_BEGIN" + this.whileCount + "\n"
                 + "INST_WHILE_END" + this.whileCount + ":\n\n";
     }

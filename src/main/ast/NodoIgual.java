@@ -31,9 +31,9 @@ public class NodoIgual extends NodoComparacionExpresiones {
         stringBuilder.append("JE EQ_TRUE").append(equalsNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");
         stringBuilder.append("JMP EQ_END").append(equalsNumber).append("\n");
-        stringBuilder.append("EQ_TRUE").append(equalsNumber).append(":").append("\n");
+        stringBuilder.append("\nEQ_TRUE").append(equalsNumber).append(":").append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 1").append("\n");
-        stringBuilder.append("EQ_END").append(equalsNumber).append(":").append("\n");
+        stringBuilder.append("\nEQ_END").append(equalsNumber).append(":").append("\n");
         return stringBuilder.toString();
     }
 }

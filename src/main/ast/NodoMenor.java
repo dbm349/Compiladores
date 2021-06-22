@@ -30,9 +30,9 @@ public class NodoMenor extends NodoComparacionExpresiones {
         stringBuilder.append("JAE MINOR_TRUE").append(minorNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");
         stringBuilder.append("JMP MINOR_END").append(minorNumber).append("\n");
-        stringBuilder.append("MINOR_TRUE").append(minorNumber).append(":").append("\n");
+        stringBuilder.append("\nMINOR_TRUE").append(minorNumber).append(":").append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 1").append("\n");
-        stringBuilder.append("MINOR_END").append(minorNumber).append(":").append("\n");
+        stringBuilder.append("\nMINOR_END").append(minorNumber).append(":").append("\n");
         return stringBuilder.toString();
     }
 }
