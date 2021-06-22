@@ -26,7 +26,7 @@ public class NodoSuma extends NodoExpresionBinaria {
             result += derecha.generarAssembler();
         }
 
-        result += "\n;inicio suma;'\n";
+        result += "\n;inicio suma;\n";
         result += "FLD " + derecha.getID() + "\n";
         result += "FLD " + izquierda.getID() + "\n";
         result += "FADD" + "\n";

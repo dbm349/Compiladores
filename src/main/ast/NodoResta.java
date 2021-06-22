@@ -26,7 +26,7 @@ public class NodoResta extends NodoExpresionBinaria {
             result += derecha.generarAssembler();
         }
 
-        result += "\n;inicio resta;'\n";
+        result += "\n;inicio resta;\n";
         result += "FLD " + derecha.getID() + "\n";
         result += "FLD " + izquierda.getID() + "\n";
         result += "FSUB" + "\n";
