@@ -30,7 +30,7 @@ public class NodoSuma extends NodoExpresionBinaria {
         result += "FLD " + derecha.getID() + "\n";
         result += "FLD " + izquierda.getID() + "\n";
         result += "FADD" + "\n";
-        result += "FSTP" + this.getID() + "\n";
+        result += "FSTP " + this.getID() + "\n";
         result += "\n\n;fin suma;\n";
         return result;
     }

@@ -4,8 +4,14 @@ import main.assembler.recorrido.ConstantesASM;
 
 public class NodoResta extends NodoExpresionBinaria {
 
+    private static int count = 0;
+    private final int subNumber;
+
     public NodoResta(NodoExpresion izquierda, NodoExpresion derecha) {
         super("-", izquierda, derecha);
+        count++;
+        subNumber = count;
+        this.setID("@__RESTA" + subNumber);
     }
 
     public String generarAssembler() {
@@ -24,7 +30,7 @@ public class NodoResta extends NodoExpresionBinaria {
         result += "FLD " + derecha.getID() + "\n";
         result += "FLD " + izquierda.getID() + "\n";
         result += "FSUB" + "\n";
-        result += "FSTP" + this.getID() + "\n";
+        result += "FSTP " + this.getID() + "\n";
         result += "\n\n;fin resta;\n";
         return result;
     }
