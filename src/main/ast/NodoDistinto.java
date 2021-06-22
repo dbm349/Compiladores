@@ -11,7 +11,7 @@ public class NodoDistinto extends NodoComparacionExpresiones {
         super(expresionIzquierda, expresionDerecha, "<>");
         count++;
         distNumber = count;
-        this.setID("@_EQ" + count);
+        this.setID("@_DIST" + count);
     }
 
     @Override
@@ -28,12 +28,12 @@ public class NodoDistinto extends NodoComparacionExpresiones {
                 "MOV BX, " + expresionIzquierda.getID()  + "\n" +
                 "CMP AX, BX\n";
         stringBuilder.append(comparar);
-        stringBuilder.append("JNE EQ_TRUE").append(distNumber).append("\n");
+        stringBuilder.append("JNE DIST_TRUE").append(distNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");
-        stringBuilder.append("JMP EQ_END").append(distNumber).append("\n");
-        stringBuilder.append("EQ_TRUE").append(distNumber).append(":").append("\n");
+        stringBuilder.append("JMP DIST_END").append(distNumber).append("\n");
+        stringBuilder.append("DIST_TRUE").append(distNumber).append(":").append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 1").append("\n");
-        stringBuilder.append("EQ_END").append(distNumber).append(":").append("\n");
+        stringBuilder.append("DIST_END").append(distNumber).append(":").append("\n");
         return stringBuilder.toString();
     }
 }

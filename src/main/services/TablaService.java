@@ -28,6 +28,7 @@ public class TablaService {
                     String value = "";
                     if (data.length < 4) {
                         value  = " DW ?";
+                        data[0] = "@__" + data[0];
                     } else {
                         value = data[3];
                         switch (data[1]) {
@@ -35,8 +36,10 @@ public class TablaService {
                                 value = " db \"" + value + "\"" + ", " + value.length() + ", " + value.length() + ", '$'";
                                 break;
                             case "Numero":
-                            case "Real":
                                 value = " dw " + value;
+                                break;
+                            case "Real":
+                                value = " dw " + value.replace(".", ",");
                                 break;
                             default:
                                 value=" dw ?";

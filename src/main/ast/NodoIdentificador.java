@@ -6,7 +6,7 @@ public class NodoIdentificador extends NodoExpresion {
     public NodoIdentificador(String identificador) {
         super("ID");
         this.identificador = identificador;
-        this.setID(identificador);
+        this.setID("@__" + identificador);
     }
 
     @Override

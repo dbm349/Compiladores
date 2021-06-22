@@ -25,7 +25,7 @@ public class NodoAsignacion extends NodoSentencia {
             stringBuilder.append(expresion.generarAssembler());
         }
         stringBuilder.append("MOV AX, ").append(expresion.getID()).append("\n");
-        stringBuilder.append("MOV ").append(this.getID()).append(", AX").append("\n");
+        stringBuilder.append("MOV ").append(identificador.getID()).append(", AX").append("\n");
         return stringBuilder.toString();
     }
 }
