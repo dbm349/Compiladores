@@ -21,4 +21,12 @@ public class NodoBloque extends NodoSentencia {
         }
         return resultado.toString();
     }
+
+    public String generarAssembler() {
+        StringBuilder assembler = new StringBuilder();
+        for (NodoSentencia sentencia : sentencias) {
+            assembler.append(sentencia.generarAssembler());
+        }
+        return assembler.toString();
+    }
 }

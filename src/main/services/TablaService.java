@@ -1,10 +1,13 @@
 package main.services;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TablaService {
 
     private String tableFile;
+    private List<String> claves;
 
     public TablaService(String tableFile) {
         this.tableFile = tableFile;
@@ -12,6 +15,7 @@ public class TablaService {
 
     public String generarASM () throws IOException {
         File file = new File(tableFile);
+        claves = new ArrayList<>();
         FileInputStream inputStream = new FileInputStream(file);
         StringBuilder resultStringBuilder = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -19,26 +23,31 @@ public class TablaService {
             while ((line = br.readLine()) != null) {
                 line = line.replace("\"", "");
                 String[] data = line.split(",");
-                String value = "";
-                if (data.length < 4) {
-                    value  = " DW ?";
-                } else {
-                    value = data[3];
-                    switch (data[1]) {
-                        case "Const_String":
-                            value = " db \"" + value + "\"" + ", " + value.length() + ", " + value.length() + ", '$'";
-                            break;
-                        case "Numero":
-                            value = " dw " + value;
-                            break;
-                        default:
-                            value=" dw ?";
-                            break;
+                if (! claves.contains(data[0])) {
+                    claves.add(data[0]);
+                    String value = "";
+                    if (data.length < 4) {
+                        value  = " DW ?";
+                    } else {
+                        value = data[3];
+                        switch (data[1]) {
+                            case "Const_String":
+                                value = " db \"" + value + "\"" + ", " + value.length() + ", " + value.length() + ", '$'";
+                                break;
+                            case "Numero":
+                            case "Real":
+                                value = " dw " + value;
+                                break;
+                            default:
+                                value=" dw ?";
+                                break;
+                        }
                     }
+                    data[0] = data[0].replace(" ", "");
+                    data[0] = data[0].replace(".", "punto");
+                    data[0] = data[0].replace(",","coma");
+                    resultStringBuilder.append(data[0]).append(value).append("\n");
                 }
-                data[0] = data[0].replace(" ", "");
-                data[0] = data[0].replace(".", "punto");
-                resultStringBuilder.append(data[0]).append(value).append("\n");
             }
         }
         inputStream.close();

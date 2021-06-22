@@ -3,6 +3,8 @@ package main.ast;
 import java.util.List;
 
 public class NodoIf extends NodoIfAbstracto {
+    static int count = 0;
+    protected int ifCount;
     protected final NodoCondicion condicion;
     protected final NodoBloque bloqueThen;
     //protected final List<NodoSentencia> sentencias;
@@ -11,6 +13,8 @@ public class NodoIf extends NodoIfAbstracto {
         super("IF");
         this.condicion = condicion;
         this.bloqueThen = new NodoBloque(instrucciones,"THEN");
+        count++;
+        ifCount = count;
     }
 
     @Override
@@ -23,7 +27,14 @@ public class NodoIf extends NodoIfAbstracto {
 
     @Override
     public String generarAssembler() {
-        return "";
+        return condicion.generarAssembler()
+                + "MOV AX, 1\n"
+                + "MOV BX, " + condicion.getID()  + "\n"
+                + "CMP AX, BX \n"
+                + "CMP " + condicion.getID() + ", 1\n"
+                + "JE INST_IF" + ifCount + "\n"
+                + bloqueThen.generarAssembler()
+                + "INST_IF" + ifCount + ":\n";
     }
 
     @Override

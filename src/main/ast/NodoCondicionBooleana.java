@@ -2,7 +2,7 @@ package main.ast;
 
 public class NodoCondicionBooleana extends NodoCondicion {
 
-    private final NodoCondicion condicionIzquierda, condicionDerecha;
+    protected final NodoCondicion condicionIzquierda, condicionDerecha;
 
     public NodoCondicionBooleana(NodoCondicion condicionIzquierda, NodoCondicion condicionDerecha, String tipo) {
         super(tipo);

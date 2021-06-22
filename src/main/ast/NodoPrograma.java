@@ -1,5 +1,6 @@
 package main.ast;
 
+import main.assembler.recorrido.ConstantesASM;
 import main.services.TablaService;
 
 import java.io.IOException;
@@ -38,18 +39,19 @@ public class NodoPrograma extends Nodo {
 
     public String generarAssembler() {
         StringBuilder assembler = new StringBuilder();
-        assembler.append("include macros2.asm\n" +
+        StringBuilder data = new StringBuilder();
+        ConstantesASM.data = data;
+        data.append("include macros2.asm\n" +
                 "include number.asm\n" +
                 "\n" +
                 ".MODEL  SMALL\n" +
                 ".386\n" +
-                ".STACK 200h\n" +
-                ".DATA\n\n");
-        //TODO: Agregar valores tabla símbolos
+                ".STACK 200h\n");
+        data.append(".DATA\n\n");
         TablaService tablaService = new TablaService("ts.txt");
         try {
             String tabla = tablaService.generarASM();
-            assembler.append(tabla);
+            data.append(tabla);
         } catch (IOException e) {
             System.out.println("No generó las variables");
         }
@@ -67,7 +69,8 @@ public class NodoPrograma extends Nodo {
                 "   int 21h ; AH=1 es el servicio de lectura\n" + //Quizás hay que quitarlo
                 "   MOV AX, 4C00h ; Sale del Dos\n\n" +
                 "END ; final del archivo.\n");
-        return assembler.toString();
+        data.append(assembler);
+        return data.toString();
     }
 
     @Override

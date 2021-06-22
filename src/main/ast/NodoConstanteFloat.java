@@ -6,6 +6,7 @@ public class NodoConstanteFloat extends NodoExpresion {
     public NodoConstanteFloat(float valor) {
         super("CTE-FLT");
         this.valor = valor;
+        this.setID("_" + Float.toString(valor).replace(".","punto").replace(",","coma"));
     }
 
     @Override

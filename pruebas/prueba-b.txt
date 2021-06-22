@@ -9,7 +9,12 @@ ENDDECLARE
 
 BEGIN.PROGRAM
 
-PRINT  "Prueba_b.txt"
+If (1 = 1){
+    PRINT  "Entra al primer if"
+}
+If (1 = 0){
+    PRINT  "Entra al segundo if"
+}
 
 PRINT  "La variable suma"
 

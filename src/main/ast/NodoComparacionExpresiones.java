@@ -2,7 +2,7 @@ package main.ast;
 
 public class NodoComparacionExpresiones extends NodoCondicion {
 
-    private final NodoExpresion expresionIzquierda, expresionDerecha;
+    protected final NodoExpresion expresionIzquierda, expresionDerecha;
 
     public NodoComparacionExpresiones(NodoExpresion expresionIzquierda, NodoExpresion expresionDerecha, String tipo) {
         super(tipo);

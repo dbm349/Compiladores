@@ -4,6 +4,7 @@ import main.ast.NodoPrograma;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Main {
 
@@ -12,12 +13,15 @@ public class Main {
 		FileReader f;
 		Lexico lexer = null;
 		try {
-			f = new FileReader("pruebas/prueba.txt");
+			f = new FileReader("pruebas/prueba-b.txt");
 			lexer = new Lexico(f);
 			parser sintactico = new parser(lexer);
 			NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
 			System.out.println("------------------------------------------------------");
-			System.out.println(programa.generarAssembler());
+			String assembler = programa.generarAssembler();
+			FileWriter fileWriter = new FileWriter("R:/tasm/prueba.asm");
+			fileWriter.write(assembler);
+			fileWriter.close();
 			System.out.println("------------------------------------------------------");
 			/*try {
 				FileWriter archivo = new FileWriter("arbol.dot");

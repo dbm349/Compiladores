@@ -8,6 +8,7 @@ public class Nodo implements RecorredorArbol {
     public static int contadorVariables = 0;
 
     private String descripcion;
+    private String id;
 
     public Nodo(String descripcion) {
         this.descripcion = descripcion;
@@ -54,5 +55,17 @@ public class Nodo implements RecorredorArbol {
     @Override
     public String generarAssembler() {
         return "";
+    }
+
+    public String podar() {
+        return "";
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String id) {
+        this.id = id;
     }
 }
