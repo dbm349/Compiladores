@@ -28,7 +28,7 @@ public class NodoWhile extends NodoSentencia {
 
     @Override
     public String generarAssembler() {
-        return  "\n\nINST_WHILE_BEGIN" + this.whileCount + ":\n"
+        return  "\nINST_WHILE_BEGIN" + this.whileCount + ":\n"
                 + this.condicion.generarAssembler()
                 + "MOV AX, 1\n"
                 + "MOV BX, " + this.condicion.getID()  + "\n"
@@ -37,6 +37,6 @@ public class NodoWhile extends NodoSentencia {
                 + "JNE INST_WHILE_END" + this.whileCount + "\n"
                 + this.bloque.generarAssembler()
                 + "JMP INST_WHILE_BEGIN" + this.whileCount + "\n"
-                + "INST_WHILE_END" + this.whileCount + ":\n\n";
+                + "\nINST_WHILE_END" + this.whileCount + ":\n";
     }
 }
