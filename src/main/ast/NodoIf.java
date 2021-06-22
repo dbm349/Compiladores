@@ -32,7 +32,7 @@ public class NodoIf extends NodoIfAbstracto {
                 + "MOV BX, " + condicion.getID()  + "\n"
                 + "CMP AX, BX \n"
                 + "CMP " + condicion.getID() + ", 1\n"
-                + "JE INST_IF" + ifCount + "\n"
+                + "JNE INST_IF" + ifCount + "\n"
                 + bloqueThen.generarAssembler()
                 + "INST_IF" + ifCount + ":\n";
     }
