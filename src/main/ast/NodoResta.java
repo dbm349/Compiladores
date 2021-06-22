@@ -10,7 +10,7 @@ public class NodoResta extends NodoExpresionBinaria {
 
     public String generarAssembler() {
 
-        ConstantesASM.data.append(this.getID()).append(" DD, ?");
+        ConstantesASM.data.append(this.getID()).append(" DD, ?\n");
 
         String result = "";
         if (!izquierda.soyHoja()) {
