@@ -4,7 +4,7 @@ import java.util.List;
 
 public class NodoWhile extends NodoSentencia {
     static int count = 0;
-    protected int ifCount;
+    protected int whileCount;
 
     private final NodoCondicion condicion;
     //private final List<NodoSentencia> sentencias;
@@ -15,7 +15,7 @@ public class NodoWhile extends NodoSentencia {
         this.condicion = condicion;
         this.bloque = new NodoBloque(sentencias,"Bloque");
         count++;
-        ifCount = count;
+        this.whileCount = count;
     }
 
     @Override
@@ -28,15 +28,15 @@ public class NodoWhile extends NodoSentencia {
 
     @Override
     public String generarAssembler() {
-        return  "INST_WHILE_BEGIN" + ifCount + ":\n"
-                + condicion.generarAssembler()
-                + "MOV AX, 1\n"
-                + "MOV BX, " + condicion.getID()  + "\n"
-                + "CMP AX, BX \n"
-                + "CMP " + condicion.getID() + ", 1\n"
-                + "JNE INST_WHILE_END" + ifCount + "\n"
-                + bloque.generarAssembler()
-                + "JMP INST_WHILE_BEGIN" + ifCount + "\n"
-                + "INST_WHILE_END" + ifCount + ":\n";
+        return  "\n\nINST_WHILE_BEGIN" + this.whileCount + ":\n"
+                + "\t" + this.condicion.generarAssembler()
+                + "\tMOV AX, 1\n"
+                + "\tMOV BX, " + this.condicion.getID()  + "\n"
+                + "\tCMP AX, BX \n"
+                + "\tCMP " + this.condicion.getID() + ", 1\n"
+                + "JNE INST_WHILE_END" + this.whileCount + "\n"
+                + "\t" + this.bloque.generarAssembler()
+                + "JMP INST_WHILE_BEGIN" + this.whileCount + "\n"
+                + "INST_WHILE_END" + this.whileCount + ":\n\n";
     }
 }
