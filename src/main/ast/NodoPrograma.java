@@ -68,6 +68,7 @@ public class NodoPrograma extends Nodo {
                 "   mov ah, 1 ; pausa, espera que oprima una tecla\n" + //Quizás hay que quitarlo
                 "   int 21h ; AH=1 es el servicio de lectura\n" + //Quizás hay que quitarlo
                 "   MOV AX, 4C00h ; Sale del Dos\n\n" +
+                "   int 21h ; AH=4C00h sale del programa\n" + //Quizás hay que quitarlo
                 "END ; final del archivo.\n");
         data.append(assembler);
         return data.toString();
