@@ -80,5 +80,9 @@ public class NodoPrograma extends Nodo {
         }
         return null;
     }
+
+    public String generarAssemblerConPreprocesador() {
+        return "";
+    }
 }
 

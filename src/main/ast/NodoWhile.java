@@ -28,7 +28,7 @@ public class NodoWhile extends NodoSentencia {
 
     @Override
     public String generarAssembler() {
-        return  "INST_WHILE_BEGIN" + ifCount + ":"
+        return  "INST_WHILE_BEGIN" + ifCount + ":\n"
                 + condicion.generarAssembler()
                 + "MOV AX, 1\n"
                 + "MOV BX, " + condicion.getID()  + "\n"
@@ -36,6 +36,7 @@ public class NodoWhile extends NodoSentencia {
                 + "CMP " + condicion.getID() + ", 1\n"
                 + "JNE INST_WHILE_END" + ifCount + "\n"
                 + bloque.generarAssembler()
+                + "JMP INST_WHILE_BEGIN" + ifCount + "\n"
                 + "INST_WHILE_END" + ifCount + ":\n";
     }
 }

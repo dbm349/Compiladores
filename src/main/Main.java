@@ -13,7 +13,7 @@ public class Main {
 		FileReader f;
 		Lexico lexer = null;
 		try {
-			f = new FileReader("pruebas/prueba.txt");
+			f = new FileReader("pruebas/prueba-b.txt");
 			lexer = new Lexico(f);
 			parser sintactico = new parser(lexer);
 			NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
