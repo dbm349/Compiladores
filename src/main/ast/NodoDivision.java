@@ -16,8 +16,7 @@ public class NodoDivision extends NodoExpresionBinaria {
 
     @Override
     public String generarAssembler() {
-        //TODO: Corregir funcionalidad
-        ConstantesASM.data.append(this.getID()).append(" DW, ?");
+        ConstantesASM.data.append(this.getID()).append(" DD, ?");
         String result = "";
         if (!izquierda.soyHoja()) {
             result += izquierda.generarAssembler();
@@ -25,10 +24,17 @@ public class NodoDivision extends NodoExpresionBinaria {
         if (!derecha.soyHoja()) {
             result += derecha.generarAssembler();
         }
-        result += "MOV AX, " + derecha.getID() + "\n";
+/*        result += "MOV AX, " + derecha.getID() + "\n";
         result += "MOV BX, " + izquierda.getID() + "\n";
         result += "DIV BX" + "\n";
-        result += "MOV " + this.getID() + ", [0000 + AL]" + "\n";
-        return  result;
+        result += "MOV " + this.getID() + ", [0000 + AL]" + "\n";*/
+
+        result += "\n;inicio division;'\n";
+        result += "FLD " + derecha.getID() + "\n";
+        result += "FLD " + izquierda.getID() + "\n";
+        result += "FDIV" + "\n";
+        result += "FSTP " + this.getID() + "\n";
+        result += "\n\n;fin division;\n";
+        return result;
     }
 }
