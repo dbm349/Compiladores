@@ -31,4 +31,10 @@ public class NodoInList extends NodoCondicion {
                 condicion.graficar(miId));
         return resultado.toString();
     }
+
+    @Override
+    public String generarAssembler() {
+        //TODO: verificar si funciona
+        return condicion.generarAssembler();
+    }
 }
