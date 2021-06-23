@@ -27,7 +27,7 @@ public class NodoMenor extends NodoComparacionExpresiones {
                 "MOV BX, " + expresionDerecha.getID()  + "\n" +
                 "CMP AX, BX\n";
         stringBuilder.append(comparar);
-        stringBuilder.append("JAE MINOR_TRUE").append(minorNumber).append("\n");
+        stringBuilder.append("JB MINOR_TRUE").append(minorNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");
         stringBuilder.append("JMP MINOR_END").append(minorNumber).append("\n");
         stringBuilder.append("\nMINOR_TRUE").append(minorNumber).append(":").append("\n");
