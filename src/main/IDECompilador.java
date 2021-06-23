@@ -1,6 +1,7 @@
 package main;
 
 import main.ast.NodoPrograma;
+import main.services.Assembler;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -42,7 +43,7 @@ public class IDECompilador extends JFrame {
 		setResizable(false);
 		setTitle("Compilador - Grupo 1");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 544, 642);
+		setBounds(100, 100, 650, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -241,7 +242,6 @@ public class IDECompilador extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				Tabla t = new Tabla();
 				t.setVisible(true);
-
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
@@ -260,10 +260,14 @@ public class IDECompilador extends JFrame {
 					parser sintactico = new parser(lexer);
 					try {
 						NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
+
+						// Generacion arbol
 						FileWriter archivo = new FileWriter("arbol.dot");
 						PrintWriter pw = new PrintWriter(archivo);
 						pw.println(programa.graficar());
 						archivo.close();
+
+						// Pasaje de .dot a .pgn
 						timestamp = (new Date()).toString();
 						timestamp = timestamp.replaceAll(" ", "");
 						timestamp = timestamp.replaceAll(":", "");
@@ -271,6 +275,13 @@ public class IDECompilador extends JFrame {
 						Runtime.getRuntime().exec(cmd);
 						System.out.println("Comando: " + cmd);
 						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
+
+						// Generacion assembler
+						String assembler = programa.generarAssembler();
+						FileWriter fileWriter = new FileWriter("final.asm");
+						fileWriter.write(assembler);
+						fileWriter.close();
+
 					} catch (Exception e) {
 						//ignore
 					}
@@ -280,7 +291,7 @@ public class IDECompilador extends JFrame {
 		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
 		gbc_btnNewButton_3.insets = new Insets(0, 5, 5, 0);
 		gbc_btnNewButton_3.gridx = 13;
-		gbc_btnNewButton_3.gridy = 4;
+		gbc_btnNewButton_3.gridy = 9;
 		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
 
 		JButton btnNewButton_2 = new JButton("Mostrar AST");
@@ -309,6 +320,19 @@ public class IDECompilador extends JFrame {
 		gbc_btnNewButton_2.gridx = 13;
 		gbc_btnNewButton_2.gridy = 3;
 		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
+
+		JButton btnNewButton_10 = new JButton("Mostrar ASM");
+		btnNewButton_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Assembler asm = new Assembler();
+				asm.setVisible(true);
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_10 = new GridBagConstraints();
+		gbc_btnNewButton_10.insets = new Insets(0, 5, 5, 0);
+		gbc_btnNewButton_10.gridx = 13;
+		gbc_btnNewButton_10.gridy = 4;
+		contentPane.add(btnNewButton_10, gbc_btnNewButton_10);
 
 	}
 	
