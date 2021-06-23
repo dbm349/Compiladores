@@ -8,7 +8,7 @@ Se descomprimió el zip del enlace de TASM, y en la configuración de DOSBox se 
         mount c R:\TASM
         c:\
         tasm final.asm
-        tlink final.obj
+        tlink /3 final.obj
         final.exe        
 
 Donde `R:\TASM` es la ruta donde se descomprimieron los ficheros que contiene el zip.
