@@ -28,6 +28,7 @@ public class Assembler extends JFrame {
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
         JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
         textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
         contentPane.add(textArea, BorderLayout.CENTER);
         JList list = new JList();
