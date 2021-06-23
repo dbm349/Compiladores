@@ -1,8 +1,13 @@
 package main.ast;
 
+import main.assembler.recorrido.ConstantesASM;
+
 import java.util.List;
 
 public class NodoInList extends NodoCondicion {
+
+    private static int count = 0;
+    private final int inlistNumber;
 
     private final NodoIdentificador identificador;
     private final List<? extends NodoExpresion> constantes;
@@ -22,6 +27,9 @@ public class NodoInList extends NodoCondicion {
             condicionAux = condicion;
         }
         this.condicion = condicion;
+        count++;
+        inlistNumber = count;
+        this.setID("@__INLIST" + inlistNumber);
     }
 
     @Override
@@ -34,7 +42,10 @@ public class NodoInList extends NodoCondicion {
 
     @Override
     public String generarAssembler() {
-        //TODO: verificar si funciona
-        return condicion.generarAssembler();
+        ConstantesASM.data.append(this.getID()).append(" DW ?\n");
+        String result = condicion.generarAssembler();
+        result += "MOV AX, " + condicion.getID() + "\n";
+        result += "MOV " + this.getID() + ", AX\n";
+        return result;
     }
 }
