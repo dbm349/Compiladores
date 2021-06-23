@@ -42,10 +42,10 @@ public class NodoInList extends NodoCondicion {
 
     @Override
     public String generarAssembler() {
-        ConstantesASM.data.append(this.getID()).append(" DW ?\n");
+        ConstantesASM.data.append(this.getID()).append(" dd ?\n");
         String result = condicion.generarAssembler();
-        result += "MOV AX, " + condicion.getID() + "\n";
-        result += "MOV " + this.getID() + ", AX\n";
+        result += "MOV EAX, " + condicion.getID() + "\n";
+        result += "MOV " + this.getID() + ", EAX\n";
         return result;
     }
 }

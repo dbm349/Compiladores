@@ -35,9 +35,9 @@ public class NodoIfElse extends NodoIfAbstracto {
     @Override
     public String generarAssembler() {
         return condicion.generarAssembler()
-                + "MOV AX, 1\n"
-                + "MOV BX, " + condicion.getID()  + "\n"
-                + "CMP AX, BX \n"
+                + "MOV EAX, 1\n"
+                + "MOV EBX, " + condicion.getID()  + "\n"
+                + "CMP EAX, EBX \n"
                 + "CMP " + condicion.getID() + ", 1\n"
                 + "JNE INST_IF_ELSE" + ifElseNumber + "\n"
                 + nodoBloqueIf.generarAssembler()

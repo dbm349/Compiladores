@@ -16,7 +16,7 @@ public class NodoMenorIgual extends NodoComparacionExpresiones {
 
     @Override
     public String generarAssembler() {
-        ConstantesASM.data.append(this.getID()).append(" DW ?\n");
+        ConstantesASM.data.append(this.getID()).append(" dd ?\n");
         StringBuilder stringBuilder = new StringBuilder();
         if (! expresionIzquierda.soyHoja()) {
             stringBuilder.append(expresionIzquierda.generarAssembler());
@@ -24,9 +24,9 @@ public class NodoMenorIgual extends NodoComparacionExpresiones {
         if (! expresionDerecha.soyHoja()) {
             stringBuilder.append(expresionDerecha.generarAssembler());
         }
-        String comparar = "MOV AX, " + expresionIzquierda.getID()  + "\n" +
-                "MOV BX, " + expresionDerecha.getID()  + "\n" +
-                "CMP AX, BX\n";
+        String comparar = "MOV EAX, " + expresionIzquierda.getID()  + "\n" +
+                "MOV EBX, " + expresionDerecha.getID()  + "\n" +
+                "CMP EAX, EBX\n";
         stringBuilder.append(comparar);
         stringBuilder.append("JBE MINOR_EQ_TRUE").append(minorEqualsNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");

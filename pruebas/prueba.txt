@@ -20,7 +20,7 @@ contar := 18.22
 
 while (contador <= 9) {
 	contador := contador + 1
-	actual := (contador * (contar + 4.67))
+	actual := (contador / 0.342)
 	suma := suma + actual
 	}
 PRINT  "La variable suma"

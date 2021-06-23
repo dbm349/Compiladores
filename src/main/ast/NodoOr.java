@@ -16,7 +16,7 @@ public class NodoOr extends NodoCondicionBooleana {
 
     @Override
     public String generarAssembler() {
-        ConstantesASM.data.append(this.getID()).append(" DW ?\n");
+        ConstantesASM.data.append(this.getID()).append(" dd ?\n");
         StringBuilder stringBuilder = new StringBuilder();
         if (! condicionIzquierda.soyHoja()) {
             stringBuilder.append(condicionIzquierda.generarAssembler());
@@ -24,13 +24,13 @@ public class NodoOr extends NodoCondicionBooleana {
         if (! condicionDerecha.soyHoja()) {
             stringBuilder.append(condicionDerecha.generarAssembler());
         }
-        String comparar = "MOV AX, " + condicionIzquierda.getID()  + "\n" +
-                "MOV BX, 1\n" +
-                "CMP AX, BX\n" +
+        String comparar = "MOV EAX, " + condicionIzquierda.getID()  + "\n" +
+                "MOV EBX, 1\n" +
+                "CMP EAX, EBX\n" +
                 "JE INST_OR_TRUE" + orNumber + "\n" +
-                "MOV AX, " + condicionDerecha.getID()  + "\n" +
-                "MOV BX, 1\n" +
-                "CMP AX, BX\n" +
+                "MOV EAX, " + condicionDerecha.getID()  + "\n" +
+                "MOV EBX, 1\n" +
+                "CMP EAX, EBX\n" +
                 "JE INST_OR_TRUE" + orNumber + "\n";
         stringBuilder.append(comparar);
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");

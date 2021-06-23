@@ -27,7 +27,7 @@ public class TablaService {
                     claves.add(data[0]);
                     String value = "";
                     if (data.length < 4) {
-                        value  = " DW ?";
+                        value  = " dd ?";
                         data[0] = "@__" + data[0];
                         data[0] = data[0].replace("<","@menor").replace(">","@mayor");
                     } else {
@@ -38,13 +38,13 @@ public class TablaService {
                                 value = " db \"" + value + "\"" + ", " + value.length() + ", " + value.length() + ", '$'";
                                 break;
                             case "Numero":
-                                value = " dw " + value;
+                                value = " dd " + value;
                                 break;
                             case "Real":
-                                value = " dw " + value.replace(".", ",");
+                                value = " dd " + value.replace(".", ",");
                                 break;
                             default:
-                                value=" dw ?";
+                                value=" dd ?";
                                 break;
                         }
                     }

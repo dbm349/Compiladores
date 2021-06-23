@@ -16,7 +16,7 @@ public class NodoDistinto extends NodoComparacionExpresiones {
 
     @Override
     public String generarAssembler() {
-        ConstantesASM.data.append(this.getID()).append(" DW ?\n");
+        ConstantesASM.data.append(this.getID()).append(" dd ?\n");
         StringBuilder stringBuilder = new StringBuilder();
         if (! expresionIzquierda.soyHoja()) {
             stringBuilder.append(expresionIzquierda.generarAssembler());
@@ -24,9 +24,9 @@ public class NodoDistinto extends NodoComparacionExpresiones {
         if (! expresionDerecha.soyHoja()) {
             stringBuilder.append(expresionDerecha.generarAssembler());
         }
-        String comparar = "MOV AX, " + expresionDerecha.getID()  + "\n" +
-                "MOV BX, " + expresionIzquierda.getID()  + "\n" +
-                "CMP AX, BX\n";
+        String comparar = "MOV EAX, " + expresionDerecha.getID()  + "\n" +
+                "MOV EBX, " + expresionIzquierda.getID()  + "\n" +
+                "CMP EAX, EBX\n";
         stringBuilder.append(comparar);
         stringBuilder.append("JNE DIST_TRUE").append(distNumber).append("\n");
         stringBuilder.append("MOV ").append(this.getID()).append(", 0").append("\n");

@@ -30,9 +30,9 @@ public class NodoWhile extends NodoSentencia {
     public String generarAssembler() {
         return  "\nINST_WHILE_BEGIN" + this.whileCount + ":\n"
                 + this.condicion.generarAssembler()
-                + "MOV AX, 1\n"
-                + "MOV BX, " + this.condicion.getID()  + "\n"
-                + "CMP AX, BX \n"
+                + "MOV EAX, 1\n"
+                + "MOV EBX, " + this.condicion.getID()  + "\n"
+                + "CMP EAX, EBX \n"
                 + "CMP " + this.condicion.getID() + ", 1\n"
                 + "JNE INST_WHILE_END" + this.whileCount + "\n"
                 + this.bloque.generarAssembler()
