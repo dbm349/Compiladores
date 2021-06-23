@@ -10,43 +10,12 @@
 ## Instrucciones de uso
 
 Se requiere instalar graphviz previamente. Se puede hacer desde: https://graphviz.org/download/.
+Para compilar TASM, nosotros usamos  [DOSBox](https://www.dosbox.com/) y [TASM](https://drive.google.com/file/d/0BxFfQqBvZCltMHdNbFFCZVJkUlE/view), se describe como instalarlo antes de mostrar estos [ejemplos](ASM.md).
 
-1. Para correr el programa usar el comando
+Para correr el programa, ir a la carpeta pruebas y usar el comando
 
-        java -jar Analizador.jar
+        java -jar Compilador.jar
 
-También en Windows usar el comando
-
-      .\Run.cmd
-
-2. Luego desde la opción "Abrir archivo", seleccionar el archivo prueba.txt.
-
-3. Con la opción "Análisis Lexicográfico" se puede realizar un análisis léxico del código en el archivo. Debería tener un léxico correcto.
-
-4. Con la opción "Análisis Sintáctico" se puede realizar el análisis sintáctico el cual también debe ser correcto.
-
-### Resultados
-
-Luego de ejecutar el análisis en el archivo ts.txt se debe hallar la tabla de símbolos. 
-
-
-## Prueba en archivo con errores de compilación:
-
-1. Seleccionar archivo ```prueba_error_compilacion.txt```
-
-2. Con la opción "Análisis Lexicográfico" se puede realizar un análisis léxico del código en el archivo. Se debería notificar de un error léxico.
-
-3. Con la opción "Análisis Sintáctico" se puede realizar el análisis sintáctico el cual también debería contener un error.
-
-## Prueba con archivo alternativo
-
-1. Para correr el programa usar el comando
-
-        java -jar Analizador.jar
-
-También en Windows usar el comando
-
-      .\Run.cmd
-
-2. Luego desde la opción "Abrir archivo", seleccionar el archivo ```prueba`_b.txt```.
+Para la generación del AST se da un ejemplo [aquí](AST_demo.md).
+Para la generación del código assembler se da un ejemplo [aquí](ASM.md).
 
