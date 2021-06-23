@@ -27,13 +27,18 @@ public class Assembler extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
-
+        JTextArea textArea = new JTextArea();
+        textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        contentPane.add(textArea, BorderLayout.CENTER);
         JList list = new JList();
         list.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        contentPane.add(list, BorderLayout.CENTER);
+        //contentPane.add(list, BorderLayout.CENTER);
         setBounds(300, 50, 675, 551);
-        JScrollBar scrollBar = new JScrollBar();
-        scrollBar.setVisible(true);
+        JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setVisible(true);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        this.add(scroll);
 
 
         File archivo = null;
@@ -46,15 +51,17 @@ public class Assembler extends JFrame {
             FileR=new FileReader(archivo);
             BufferedR= new BufferedReader(FileR);
             String informacion;
+            String asm = "";
 
             DefaultListModel lista = new DefaultListModel();
 
             while((informacion=BufferedR.readLine()) != null) {
                 lista.addElement(informacion);
+                asm += informacion + "\n";
             }
 
             list.setModel(lista);
-
+            textArea.setText(asm);
             JButton btnCerrar = new JButton("Cerrar");
             btnCerrar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {

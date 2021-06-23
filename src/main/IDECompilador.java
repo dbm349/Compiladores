@@ -250,7 +250,7 @@ public class IDECompilador extends JFrame {
 		gbc_btnNewButton_1.gridy = 11;
 		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 
-		JButton btnNewButton_3 = new JButton("Generar AST");
+		JButton btnNewButton_3 = new JButton("Generar AST y ASM");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (fr == null) {
