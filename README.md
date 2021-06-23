@@ -12,7 +12,7 @@
 Se requiere instalar graphviz previamente. Se puede hacer desde: https://graphviz.org/download/.
 Para compilar TASM, nosotros usamos  [DOSBox](https://www.dosbox.com/) y [TASM](https://drive.google.com/file/d/0BxFfQqBvZCltMHdNbFFCZVJkUlE/view), se describe como instalarlo antes de mostrar estos [ejemplos](ASM.md).
 
-Para correr el programa, ir a la carpeta pruebas y usar el comando
+Para correr el programa, ir a la carpeta `\pruebas` y usar el comando
 
         java -jar Compilador.jar
 
