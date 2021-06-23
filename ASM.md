@@ -59,23 +59,45 @@ Acá se puede ver el código assembler generado. También, este programa se guar
 
 1) Abrimos un archivo con el siguiente código:
 
-        DECLARE
-            [resultado] := [INT]
-        ENDDECLARE
-        
-        BEGIN.PROGRAM
-        
-        resultado := (5 * 5) / 5 + 3 - 1
-        if (resultado = 7) {
-            PRINT "Dio bien la operacion"
-        } else {
-            PRINT "Dio mal la operacion"
-        }
-        
-        END.PROGRAM
+         DECLARE
+            [suma, contador, d1] := [FLOAT, INT, FLOAT]
+            [actual, contar, palabra] := [FLOAT, FLOAT, STRING]
+            [var] := [INT]
+         ENDDECLARE
+         
+         BEGIN.PROGRAM
+         
+            PRINT  "Prueba.txt AnalizadorLexico"
+            contador := 0
+            suma := 76.5
+            contar := 18.22
+            
+            while (contador <= 9) {
+               contador := contador + 1
+               actual := (contador * (contar + 4.67))
+               suma := suma + actual
+            }
+            PRINT  "La variable suma"
+            
+            
+            If ((actual > 2) and (actual <> 0)){
+               PRINT  "actualesmayorque2ydistintode"
+               palabra := "es mayor"
+            }
+            Else{
+               PRINT "no es mayor que 2"
+               palabra := "es mayor"
+            }
+            
+            If (INLIST(contador, [2 ; 12 ; 24 ; 48])){
+               d1 := 3.14
+            }
+         
+         
+         END.PROGRAM
 
 2) Generamos el assembler y lo copiamos a `R:\TASM`.
 
 3) Copiamos el archivo generado a `R:\TASM` y abrimos DOSBox.
 
-![](doc/img/ASM/ASM_3.png)
+![](doc/img/ASM/ASM_4.png)
