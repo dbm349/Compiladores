@@ -19,7 +19,7 @@ public class Main {
 			NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
 			System.out.println("------------------------------------------------------");
 			String assembler = programa.generarAssembler();
-			FileWriter fileWriter = new FileWriter("prueba.asm");
+			FileWriter fileWriter = new FileWriter("R:/TASM/final.asm");
 			fileWriter.write(assembler);
 			fileWriter.close();
 			System.out.println("------------------------------------------------------");

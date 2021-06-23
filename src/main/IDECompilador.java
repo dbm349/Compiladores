@@ -294,6 +294,47 @@ public class IDECompilador extends JFrame {
 		gbc_btnNewButton_3.gridy = 9;
 		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
 
+		JButton btnNewButton_6 = new JButton("Ejecutar");
+		btnNewButton_6.setVisible(false);
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (fr == null) {
+					JOptionPane.showMessageDialog(null, "No hay archivo cargado");
+				} else {
+					Lexico lexer = new Lexico(fr);
+					parser sintactico = new parser(lexer);
+					try {
+						archivo=new File("ASM.conf");
+
+						FileReader fileReader =new FileReader(archivo);
+						BufferedReader bufferedReader = new BufferedReader(fileReader);
+						String tasmPath = bufferedReader.readLine();
+						String dosBoxPath = bufferedReader.readLine();
+
+						NodoPrograma programa = (NodoPrograma) sintactico.parse().value;
+						System.out.println("Generado AST");
+						String assembler = programa.generarAssembler();
+						FileWriter fileWriter = new FileWriter(tasmPath + "/prueba.asm");
+						fileWriter.write(assembler);
+						fileWriter.close();
+						System.out.println("Generado ASM");
+						String cmd = "cd "+ dosBoxPath + "\n DOSBox.exe\"";
+						System.out.println("Ejecutando: " + cmd);
+						Runtime.getRuntime().exec(cmd);
+						System.out.println("Programa ejecutado");
+
+					} catch (Exception e) {
+						//ignore
+					}
+				}
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_6 = new GridBagConstraints();
+		gbc_btnNewButton_6.insets = new Insets(0, 5, 5, 0);
+		gbc_btnNewButton_6.gridx = 13;
+		gbc_btnNewButton_6.gridy = 6;
+		contentPane.add(btnNewButton_6, gbc_btnNewButton_6);
+
 		JButton btnNewButton_2 = new JButton("Mostrar AST");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

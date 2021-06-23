@@ -2,20 +2,16 @@
 
 
 DECLARE
-[valor] := [INT]
-[resultado] := [INT]
-[contador] := [INT]
+    [resultado] := [INT]
 ENDDECLARE
 
 BEGIN.PROGRAM
 
-If ((1 = 1) AND (0 = 1)){
-    PRINT  "Entra al primer if"
+resultado := (5 * 5) / 5 + 3 - 1
+if (resultado = 7) {
+    PRINT "Dio bien la operacion"
+} else {
+    PRINT "Dio mal la operacion"
 }
-If ((1 = 0) OR (1 = 1)){
-    PRINT  "Entra al segundo if"
-}
-
-PRINT  "La variable suma"
 
 END.PROGRAM

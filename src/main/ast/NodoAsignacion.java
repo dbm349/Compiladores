@@ -24,7 +24,12 @@ public class NodoAsignacion extends NodoSentencia {
         if (! expresion.soyHoja()) {
             stringBuilder.append(expresion.generarAssembler());
         }
-        stringBuilder.append("MOV AX, ").append(expresion.getID()).append("\n");
+        var descripcionNodo = expresion.getDescripcionNodo();
+        if (descripcionNodo.contains("CTE-STR")) {
+            stringBuilder.append("MOV AX, OFFSET ").append(expresion.getID()).append("\n");
+        } else {
+            stringBuilder.append("MOV AX, ").append(expresion.getID()).append("\n");
+        }
         stringBuilder.append("MOV ").append(identificador.getID()).append(", AX").append("\n");
         return stringBuilder.toString();
     }
