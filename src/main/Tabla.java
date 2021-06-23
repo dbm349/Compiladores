@@ -55,7 +55,9 @@ public class Tabla extends JFrame {
         BufferedReader BufferedR=null;
 
         try {
-            archivo=new File(ruta +"\\ts.txt");
+            archivo=new File(ruta +"\\ts.txt");      // windows
+            //archivo=new File(ruta +"/ts.txt");//linux
+
             FileR=new FileReader(archivo);
             BufferedR= new BufferedReader(FileR);
             String informacion;
