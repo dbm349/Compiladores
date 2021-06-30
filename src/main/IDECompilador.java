@@ -268,13 +268,17 @@ public class IDECompilador extends JFrame {
 						archivo.close();
 
 						// Pasaje de .dot a .pgn
-						timestamp = (new Date()).toString();
-						timestamp = timestamp.replaceAll(" ", "");
-						timestamp = timestamp.replaceAll(":", "");
-						String cmd = "dot -Tpng arbol.dot -o \"" + timestamp + ".png\"";
-						Runtime.getRuntime().exec(cmd);
-						System.out.println("Comando: " + cmd);
-						resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
+						try {
+							timestamp = (new Date()).toString();
+							timestamp = timestamp.replaceAll(" ", "");
+							timestamp = timestamp.replaceAll(":", "");
+							String cmd = "dot -Tpng arbol.dot -o \"" + timestamp + ".png\"";
+							Runtime.getRuntime().exec(cmd);
+							System.out.println("Comando: " + cmd);
+							resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
+						} catch (Exception e) {
+							System.out.println("No se pudo generar el pgn AST, revisar la instalación de Graphviz");
+						}
 
 						// Generacion assembler
 						String assembler = programa.generarAssembler();
