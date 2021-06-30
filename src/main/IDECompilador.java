@@ -273,8 +273,8 @@ public class IDECompilador extends JFrame {
 							timestamp = timestamp.replaceAll(" ", "");
 							timestamp = timestamp.replaceAll(":", "");
 							String cmd = "dot -Tpng arbol.dot -o \"" + timestamp + ".png\"";
-							Runtime.getRuntime().exec(cmd);
 							System.out.println("Comando: " + cmd);
+							Runtime.getRuntime().exec(cmd);
 							resultadoAnalisis.setText(lexer.s + "\n\n AST generado");
 						} catch (Exception e) {
 							System.out.println("No se pudo generar el pgn AST, revisar la instalación de Graphviz");
