@@ -351,7 +351,7 @@ condicionlogica ::=         ParA condicion:condicion ParC
                                                                         {:System.out.println("[Regla 32] (Condicion) And (Condicion)");
                                                                             s = s + "[Regla 32] (Condicion) And (Condicion)\n";
 							                                                mensaje += "Reducido: ( <condicion> ) AND ( <condicion> ) -> <condicionlogica>\n";
-							                                                RESULT = new NodoOr(condicion_izquierda, condicion_derecha);
+							                                                RESULT = new NodoAnd(condicion_izquierda, condicion_derecha);
                                                                             :}
                             | ParA condicion:condicion_izquierda ParC  Or ParA
                             condicion:condicion_derecha ParC

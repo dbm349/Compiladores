@@ -694,6 +694,7 @@ class CUP$parser$actions {
 		int expresionright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		NodoExpresion expresion = (NodoExpresion)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		//System.out.println("[Regla 16] Asignacion Expresion");
+                                                                            //TODO: Comprobar si se puede actualizar tabla de símbolos acá
 							                                                s = s + "[Regla 16] Asignacion Expresion\n";
 							                                                mensaje += "Reducido: <VarId> <expresion> -> <asignacion>\n";
                                                                             RESULT= new NodoAsignacion(new NodoIdentificador(identificador), expresion);
@@ -713,6 +714,7 @@ class CUP$parser$actions {
 		int constanteright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String constante = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		//System.out.println("[Regla 17] Asignacion String");
+                                                                            //TODO: Cambiar valores en la tabla de símbolos
                                                                             s = s + "[Regla 17] Asignacion String\n";
                                                                             listaSimbolos.add(constante.toString());
 							                                                mensaje += "Reducido: <VarId> <Const_String> -> <asignacion>\n";
@@ -984,7 +986,7 @@ class CUP$parser$actions {
 		System.out.println("[Regla 32] (Condicion) And (Condicion)");
                                                                             s = s + "[Regla 32] (Condicion) And (Condicion)\n";
 							                                                mensaje += "Reducido: ( <condicion> ) AND ( <condicion> ) -> <condicionlogica>\n";
-							                                                RESULT = new NodoOr(condicion_izquierda, condicion_derecha);
+							                                                RESULT = new NodoAnd(condicion_izquierda, condicion_derecha);
                                                                             
               CUP$parser$result = parser.getSymbolFactory().newSymbol("condicionlogica",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
